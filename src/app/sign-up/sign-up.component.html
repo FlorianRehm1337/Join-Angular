@@ -1,0 +1,52 @@
+<img class="logo-dark" src="assets/img/join-logo.svg" alt="">
+
+
+<div class="signup-main-container">
+  <div class="signup-inner-container">
+    <img routerLink="/login" src="assets/img/icon-arrow-left.svg">
+    <div class="signup-header">
+      <h1>Sign up</h1>
+      <div class="blue-underline"></div>
+    </div>
+    <form (ngSubmit)="createNewUser()" [formGroup]="signupForm" class="form-container">
+      <div class="input-container">
+        <input (change)="inputservice.onChangeName($event.target)" formControlName="name" name="name" placeholder="Name">
+        <ng-container *ngIf="signupForm.controls['name'] as username">
+          <ng-container class="input-container" *ngIf="username.dirty || username.touched">
+            <ng-container *ngIf="username.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please enter a username.</p>
+              <p class="error" *ngIf="errors?.['minlength']">The username must contain atleast
+                {{errors?.['minlength'].requiredLength}} characters.</p>
+            </ng-container>
+          </ng-container> 
+        </ng-container>
+
+        <input (change)="inputservice.onChangeEmail($event.target)" formControlName="email" name="email" placeholder="Email" type="email">
+        <ng-container *ngIf="signupForm.controls['email'] as email">
+          <ng-container class="input-container" *ngIf="email.dirty || email.touched">
+            <ng-container *ngIf="email.errors as errors">
+              <p class="error" *ngIf="errors?.['required'] || errors?.['pattern']">Please enter a valid email adress
+              </p>
+
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <input (change)="inputservice.onChangePassword($event.target)" formControlName="password" name="password" placeholder="Password" type="password">
+        <ng-container *ngIf="signupForm.controls['password'] as password">
+          <ng-container class="input-container" *ngIf="password.dirty || password.touched">
+            <ng-container *ngIf="password.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please enter a password </p>
+              <p class="error" *ngIf="errors?.['minlength']">Your password must contain atleast
+                {{errors?.['minlength'].requiredLength}} characters. </p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+      </div>
+      <div class="btn-container">
+        <button [disabled]="!(signupForm.valid && (signupForm.dirty || signupForm.touched))" type="submit">Sign
+          up</button>
+      </div>
+    </form>
+  </div>
+</div>

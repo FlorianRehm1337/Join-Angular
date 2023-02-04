@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "join-17d18": {
+      "hosting": {
+        "Join": [
+          "join-17d18"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "join-17d18"
+  }
+}

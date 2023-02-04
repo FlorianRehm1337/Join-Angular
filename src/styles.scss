@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+* {
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Inter";
+}
+
+body {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+}
+
+app-add-task {
+  min-height: calc(100vh - 80px);
+  background-color: rgb(246, 247, 248);
+}
+
+@media (min-width: 1000px) {
+  app-add-task {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(246, 247, 248);
+  }
+}

@@ -1,0 +1,28 @@
+<div class="header-main-container mobile fixed-header">
+  <img src="assets/img/join-logo.svg" alt="logo.svg">
+  <div *ngIf="router.url != '/addtask'" class="help-profile-container">
+    <div (click)="openMenu()" class="profile-border">
+      <img src="assets/img/profil-img.png" alt="proil-img.png">
+    </div>
+    <div class="resp-menu" [ngClass]="menuOpened ? 'show' : 'hide'">
+      <a routerLink="/help">Help</a>
+      <a routerLink="/legal-notice">Legal notice</a>
+      <a (click)="logOut()">Log out</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Desktop Version of Header -->
+<div class="header-main-container-desktop d-none">
+  <span>Kanban Project Management Tool</span>
+  <div class="help-profile-container">
+    <img routerLink="/help" class="d-none" src="assets/img/icon-help-head.svg" alt="help.svg">
+    <div (click)="openMenu()" class="profile-border">
+      <img src="assets/img/profil-img.png" alt="profile.png">
+    </div>
+    <div class="resp-menu desktop-menu" [ngClass]="menuOpened ? 'show' : 'hide'">
+      <a (click)="logOut()">Log out</a>
+    </div>
+  </div>
+</div>

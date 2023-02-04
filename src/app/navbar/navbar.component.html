@@ -1,0 +1,48 @@
+<div class="navbar-main-container mobile">
+  <div routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/summary" class="navbar-btn">
+    <img src="assets/img/icon-summary.svg" alt="summary.svg">
+    <span>Summary</span>
+  </div>
+  <div routerLinkActive="active" routerLink="/board" class="navbar-btn">
+    <img src="assets/img/icon-board.svg" alt="board.svg">
+    <span>Board</span>
+  </div>
+  <div routerLinkActive="active" routerLink="/addtask" class="navbar-btn">
+    <img src="assets/img/icon-add-task.svg" alt="add-task.svg">
+    <span>Add Task</span>
+  </div>
+  <div routerLinkActive="active" routerLink="/contacts" class="navbar-btn">
+    <img src="assets/img/icon-contacts 13.svg" alt="icon-contacts.svg">
+    <span>Contacts</span>
+  </div>
+</div>
+
+<!-- Desktop Version of Navbar -->
+<div class="navbar-main-container-desktop d-none">
+  <img class="logo-desktop" src="assets/img/logo-white.svg" alt="logo.svg">
+  <div class="navbar-wrapper">
+    <div>
+      <div routerLinkActive="active" routerLink="/summary" class="navbar-btn-desktop">
+        <img src="assets/img/icon-summary.svg" alt="summary.svg">
+        <span>Summary</span>
+      </div>
+      <div routerLinkActive="active" routerLink="/board" class="navbar-btn-desktop">
+        <img src="assets/img/icon-board.svg" alt="board.svg">
+        <span>Board</span>
+      </div>
+      <div routerLinkActive="active" routerLink="/addtask" class="navbar-btn-desktop">
+        <img src="assets/img/icon-add-task.svg" alt="icon-add-task.svg">
+        <span>Add Task</span>
+      </div>
+      <div routerLinkActive="active" routerLink="/contacts" class="navbar-btn-desktop">
+        <img src="assets/img/icon-contacts 13.svg" alt="icon-contacts.svg">
+        <span>Contacts</span>
+      </div>
+    </div>
+    <div routerLinkActive="active" routerLink="/legal-notice" class="navbar-btn-desktop">
+      <img src="assets/img/icon-legal.svg" alt="icon-legal.svg">
+      <span>Legal notice</span>
+    </div>
+  </div>
+
+</div>

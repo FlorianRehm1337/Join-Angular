@@ -1,0 +1,116 @@
+<div class="addtask-main-container">
+  <span class="sub-headline">Kanban Project Management Tool</span>
+  <h1>Add Task</h1>
+  <form action="">
+    <div class="left-form">
+      <div class="input-container">
+        <span>Title</span>
+        <input placeholder="Enter a title" type="text">
+      </div>
+
+      <div class="input-container">
+        <span>Description</span>
+        <textarea placeholder="Enter a Description" name="description" id="description" cols="30" rows="4"></textarea>
+      </div>
+
+      <div class="input-container">
+        <span>Priority</span>
+        <div class="prio-container">
+          <button (click)="getActiveButton('urgent')" [ngClass]="{'urgent-btn': currentSelection === 'urgent'}">Urgent
+            <img src="assets/img/prio-urgent.svg" alt="prio-urgent.svg">
+          </button>
+          <button (click)="getActiveButton('medium')" [ngClass]="{'medium-btn': currentSelection === 'medium'}">Medium
+            <img src="assets/img/prio-medium.svg" alt="prio-urgent.svg">
+          </button>
+          <button (click)="getActiveButton('low')" [ngClass]="{'low-btn': currentSelection === 'low'}">Low
+            <img src="assets/img/prio-low.svg" alt="prio-urgent.svg">
+          </button>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <span>Due date</span>
+        <input placeholder="Enter a title" type="date">
+      </div>
+    </div>
+    <div class="right-form">
+      <div class="input-container">
+        <span>Category</span>
+        <div [@openCategories]="categoriesOpened ? 'end' : 'start'" (click)="openCategories()"
+          [ngClass]="{'full-height': categoriesOpened === true}" class="drop-down-container">
+          <div *ngIf="newCategory" class="new-category-container">
+            <input type="text">
+            <div class="new-category-icon-container">
+              <img (click)="cancelCategory()" src="assets/img/icons-cancel.svg" alt="cancel.svg">
+              <img (click)="addCategory()" src="assets/img/icon-check.png" alt="check.png">
+            </div>
+          </div>
+          <div *ngIf="!newCategory">
+            <span>Select task category</span>
+            <img src="assets/img/icon-arrow-down-scroll.png" alt="arrow-bottom.svg">
+          </div>
+          <div *ngIf="categoriesOpened && !newCategory" class="custom-list">
+            <span (click)="showInputField()">New Category</span>
+            <span>Sales</span>
+            <span>Backoffice</span>
+            <span>Development</span>
+            <span>Sales</span>
+            <span>Backoffice</span>
+            <span>Development</span>
+            <span>Sales</span>
+            <span>Backoffice</span>
+            <span>Development</span>
+            <!-- +Farben jeweils Pro Kategorie -->
+          </div>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <span>Assigned to</span>
+        <div [@openCategories]="asigneesOpened ? 'end' : 'start'" [ngClass]="{'full-height': asigneesOpened === true}"
+          class="drop-down-container">
+          <div (click)="openAssignees()">
+            <span>Select contacts to assign</span>
+            <img src="assets/img/icon-arrow-down-scroll.png" alt="arrow-bottom.svg">
+          </div>
+          <div *ngIf="asigneesOpened" class="custom-list">
+            <div class="assignee-container">
+              <span>Flo</span>
+              <input type="checkbox">
+            </div>
+            <div class="assignee-container">
+              <span>Rebecca</span>
+              <input type="checkbox">
+            </div>
+            <div class="assignee-container">
+              <span>Testuser</span>
+              <input type="checkbox">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <span>Subtasks</span>
+        <div class="subtask-container">
+          <input placeholder="Add new subtask" type="text">
+          <img (click)="addSubtask()" src="assets/img/icon-add-plus.svg" alt="icon-add.svg">
+        </div>
+      </div>
+
+      <div class="desktop-btn-container">
+        <button>Clear
+          <img (click)="cancelTask()" src="assets/img/icons-cancel.svg" alt="cancel.svg">
+        </button>
+        <button (click)="createTask()">Create Task
+          <img src="assets/img/icon-check.png" alt="check.svg">
+        </button>
+
+      </div>
+    </div>
+
+    <button (click)="createTask()" class="create-btn-mobile" *ngIf="router.url == '/addtask'" type="submit">Create
+      <img src="assets/img/icon-check.png" alt="check.svg">
+    </button>
+  </form>
+</div>

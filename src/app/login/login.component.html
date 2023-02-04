@@ -1,0 +1,36 @@
+<div class="dark-overlay"></div>
+<img class="logo-white" src="assets/img/logo-white.svg" alt="">
+<img class="logo-dark" src="assets/img/join-logo.svg" alt="">
+
+<div class="login-main-container">
+  <div class="login-inner-container">
+    <div class="login-header">
+      <h1>Log in</h1>
+      <div class="blue-underline"></div>
+    </div>
+    <form (ngSubmit)="logInUser()" class="form-container" action="">
+      <div class="input-container">
+        <input [(ngModel)]="email" name="email" placeholder="Email" type="email">
+        <input [(ngModel)]="password" name="password" placeholder="Password" type="password">
+        <ng-container *ngIf="authservice.loginFailed">
+          <p class="error">username or password are incorrect!</p>
+        </ng-container>
+      </div>
+      <div class="pw-remember-container">
+        <a routerLink="/forgot-password">Forgot my password</a>
+        <div>
+          <input [checked]="isChecked" (change)="isChecked = !isChecked" type="checkbox">
+          <span>Stay logged in</span>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button type="submit">Log in</button>
+        <button type="button" (click)="authservice.loginAsGuest()">Guest Log in</button>
+      </div>
+      <div class="sign-up">
+        <span>Not a Join user?</span>
+        <button type="button" routerLink="/signup">Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>

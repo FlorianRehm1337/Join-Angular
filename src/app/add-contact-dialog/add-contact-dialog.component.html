@@ -1,0 +1,55 @@
+<div class="add-contact-container">
+  <div class="add-contact-wrapper">
+    <div class="add-contact-dark">
+      <img class="cross-white" src="assets/img/icon-cross.png" alt="cross.png">
+      <img class="join-logo-white" src="assets/img/logo-white.svg" alt="logo-white.svg">
+      <h1>Add contact</h1>
+      <div class="font-wrapper">
+        <span>Tasks are better with a team!</span>
+        <div class="blue-border"></div>
+      </div>
+
+      <img class="profile" src="assets/img/empty-profile.png" alt="contact-profile.png">
+    </div>
+    <div class="add-contact-light">
+      <img class="cross-dark" src="assets/img/icon-cross.png" alt="cross.png">
+      <form (ngSubmit)="createNewContact()" [formGroup]="newContactForm" action="">
+        <input formControlName="name" placeholder="Name" type="text">
+        <ng-container *ngIf="newContactForm.controls['name'] as username">
+          <ng-container class="input-container" *ngIf="username.dirty || username.touched">
+            <ng-container *ngIf="username.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please enter a name.</p>
+              <p class="error" *ngIf="errors?.['pattern']">Please enter the first- and lastname <br>e.g. <b>Max
+                  Mustermann</b>.</p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <input formControlName="email" placeholder="Email" type="email">
+        <ng-container *ngIf="newContactForm.controls['email'] as email">
+          <ng-container class="input-container" *ngIf="email.dirty || email.touched">
+            <ng-container *ngIf="email.errors as errors">
+              <p class="error" *ngIf="errors?.['required'] || errors?.['pattern']">Please enter a valid email adress
+              </p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <input formControlName="phoneNumber" placeholder="Phone" type="number">
+        <ng-container *ngIf="newContactForm.controls['phoneNumber'] as phoneNumber">
+          <ng-container class="input-container" *ngIf="phoneNumber.dirty || phoneNumber.touched">
+            <ng-container *ngIf="phoneNumber.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please enter a phonenumber </p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <div class="btn-container">
+          <button type="submit">Cancel
+            <img src="assets/img/icon-cross.png" alt="cross.png">
+          </button>
+          <button type="submit">Create contact
+            <img src="assets/img/icon-check-white.png" alt="check.png">
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

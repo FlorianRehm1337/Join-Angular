@@ -1,0 +1,290 @@
+::placeholder {
+  color: rgb(215, 215, 215);
+  opacity: 1;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.edit-contact-container {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+}
+
+.edit-contact-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  bottom: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  padding: 0 24px;
+  height: calc(100vh - 80px - 80px);
+  overflow-y: scroll;
+}
+
+.edit-contact-dark {
+  background: #2a3647;
+  text-align: center;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  h1 {
+    margin-top: 42px;
+    color: white;
+    font-size: 47px;
+    margin-block-end: 12px;
+  }
+
+  span {
+    color: white;
+    font-size: 21px;
+  }
+}
+
+.join-logo-white {
+  display: none;
+}
+
+.cross-white {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.profile {
+  background-color: orange;
+  position: absolute;
+  bottom: -42px;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+  border-radius: 100%;
+  border: 3px solid white;
+
+  h1 {
+    margin: 0;
+    font-size: 32px;
+  }
+}
+
+.font-wrapper {
+  width: fit-content;
+  margin-bottom: 100px;
+}
+
+.blue-border {
+  margin-top: 8px;
+  width: 100px;
+  border-bottom: 3px solid #29abe2;
+}
+
+.edit-contact-light {
+  padding: 48px 24px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  background-color: white;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    height: 41px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
+    padding: 8px 42px 8px 24px;
+    width: 100%;
+    font-size: 21px;
+    outline: none;
+    margin-top: 32px;
+
+    &.ng-touched,
+    &.ng-dirty {
+      &.ng-invalid {
+        border: red solid 2px;
+      }
+
+      &.ng-valid {
+        border: green solid 2px;
+      }
+    }
+  }
+
+  p {
+    text-align: left;
+  }
+
+  input:first-child {
+    background-image: url("~src/assets/img/icon-user.svg");
+    background-repeat: no-repeat;
+    background-position: 95%, center;
+  }
+
+  input:nth-child(2) {
+    background-image: url("~src/assets/img/email_input.svg");
+    background-repeat: no-repeat;
+    background-position: 95%, center;
+  }
+
+  input:nth-child(3) {
+    background-image: url("~src/assets/img/icon-phone.svg");
+    background-repeat: no-repeat;
+    background-position: 95%, center;
+  }
+
+  button:first-child {
+    display: none;
+  }
+
+  button {
+    width: 75px;
+    height: 51px;
+    background: #2a3647;
+    border-radius: 10px;
+    color: white;
+    font-size: 21px;
+    line-height: 120%;
+    border: none;
+    cursor: pointer;
+    margin-top: 32px;
+
+    &:hover {
+      background: #29abe2;
+    }
+  }
+
+  .error {
+    color: red;
+    margin: 4px;
+  }
+}
+
+@media (min-width: 800px) {
+  .edit-contact-wrapper {
+    flex-direction: row;
+    overflow: unset;
+    max-height: unset;
+    justify-content: center;
+    max-width: 1100px;
+    max-height: 800px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .edit-contact-dark {
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    width: 100%;
+    max-width: 450px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 32px;
+
+    h1 {
+      font-size: 38px;
+    }
+
+    span {
+      font-size: 16px;
+    }
+  }
+
+  .edit-contact-light {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: 30px;
+    width: 100%;
+    padding: 48px;
+    position: relative;
+  }
+
+  .cross-white {
+    display: none;
+  }
+
+  .cross-dark {
+    position: absolute;
+    top: 24px;
+    right: 48px;
+    filter: invert(75%) sepia(4%) saturate(4915%) hue-rotate(177deg) brightness(89%) contrast(85%);
+  }
+
+  .join-logo-white {
+    display: unset;
+    width: 56px;
+    height: 64px;
+    position: absolute;
+    top: 32px;
+    left: 32px;
+  }
+
+  .font-wrapper {
+    margin-bottom: 64px;
+  }
+
+  .profile {
+    position: unset;
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+  }
+
+  form {
+    width: 100%;
+    input {
+      max-width: 400px;
+    }
+
+    button {
+      width: 145px;
+      &:hover {
+        border: 1px solid #29abe2;
+
+        img {
+          filter: invert(35%) sepia(35%) saturate(5258%) hue-rotate(166deg) brightness(89%) contrast(99%);
+        }
+      }
+
+      img {
+        width: 20px;
+        filter: invert(75%) sepia(4%) saturate(4915%) hue-rotate(177deg) brightness(89%) contrast(85%);
+      }
+    }
+  }
+}
+
+@media (min-width: 1100px) {
+  .edit-contact-dark {
+    h1 {
+      font-size: 50px;
+    }
+  }
+
+  .profile {
+    h1 {
+      font-size: 48px;
+    }
+  }
+}
