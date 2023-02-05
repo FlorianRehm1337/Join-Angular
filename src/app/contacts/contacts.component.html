@@ -1,30 +1,66 @@
 <button click="openAddContact()">New contact
-<img src="assets/img/icons-add-contact.svg" alt="add-contact.svg">
+  <img src="assets/img/icons-add-contact.svg" alt="add-contact.svg">
 </button>
 
-<div class="main-contact-container">
-  <div class="character-list">
-    <div class="single-list">
-      <h2>A</h2>
-    </div>
-    <div class="contact">
-      <div class="background-contact-characters">
-        <h2 class="contact-characters">TS</h2>
+<div class="main-contact-wrapper">
+  <div *ngIf="!detailView && windowWidth < 1000 || !detailView && windowWidth > 1000 || detailView && windowWidth > 1000" class="contactlist-container">
+    <div class="character-list">
+      <div class="single-list">
+        <h2>A</h2>
       </div>
-      <div class="contact-info">
-        <h2>Test User</h2>
-        <span>test@test.de</span>
+      <div (click)="openDetailView()" class="contact">
+        <div class="background-contact-characters">
+          <h2 class="contact-characters">TS</h2>
+        </div>
+        <div class="contact-info">
+          <h2>Test User</h2>
+          <span>test@test.de</span>
+        </div>
       </div>
-    </div>
-    <div class="contact">
-      <div class="background-contact-characters">
-        <h2 class="contact-characters">TS</h2>
-      </div>
-      <div class="contact-info">
-        <h2>Test User</h2>
-        <span>test@test.de</span>
+      <div class="contact">
+        <div class="background-contact-characters">
+          <h2 class="contact-characters">TS</h2>
+        </div>
+        <div class="contact-info">
+          <h2>Test User</h2>
+          <span>test@test.de</span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <div *ngIf="detailView" class="contact-detail-container">
+    <img (click)="closeDetailView()" src="assets/img/icon-arrow-left.svg" alt="arrow-left.svg">
+
+    <p>Kanban Project Management Tool</p>
+    <div class="headline-container">
+      <h1>Contacts</h1>
+      <div class="blue-border-middle"></div>
+      <p>Better with a team</p>
+      <div class="blue-border-bottom"></div>
+    </div>
+    <div class="contact-name-container">
+      <div class="background-contact-characters-detail">
+        <h2 class="contact-characters">AM</h2>
+      </div>
+      <h2>Anton Mayer</h2>
+    </div>
+    <div class="info-edit-container">
+      <h4>Contact Information</h4>
+      <div>
+        <img class="edit-desktop" src="assets/img/pencil-no-bg.svg" alt="pencil-no-bg.svg">
+        <p>Edit Contact</p>
+      </div>
+    </div>
+    <div class="email-section">
+      <b>Email</b>
+      <p>wolf@gmail.com</p>
+    </div>
+    <div class="phone-section">
+      <b>Phone</b>
+      <p>+49 0123456789</p>
+    </div>
+    <img class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.svg">
+  </div>
+
+</div>

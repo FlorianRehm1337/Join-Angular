@@ -12,6 +12,7 @@
   right: 0px;
   background-color: white;
   overflow-x: hidden;
+  z-index: 1;
 
   span {
     font-size: 21px;
@@ -35,6 +36,7 @@
   top: 0px;
   left: 250px;
   right: 0px;
+  z-index: 1;
 
   span {
     margin-left: 64px;
