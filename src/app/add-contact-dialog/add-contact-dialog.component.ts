@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { InputService } from '../shared/services/input.service';
+import { ContactsService } from '../shared/services/contacts.service';
 
 @Component({
   selector: 'app-add-contact-dialog',
@@ -12,7 +13,7 @@ export class AddContactDialogComponent implements OnInit {
 
   newContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([
-      Validators.pattern(/^[A-Z]+[a-z]+ [A-Z]+[a-z]+$/),
+      Validators.pattern(/^[A-Z]+[a-zß]+ [A-Z]+[a-zß]+$/),
       Validators.required
     ])),
     email: new FormControl('', Validators.compose([
@@ -26,13 +27,17 @@ export class AddContactDialogComponent implements OnInit {
     ])),
   });
 
-  constructor(public inputservice: InputService) { }
+  constructor(public inputservice: InputService, public contactsservice: ContactsService) { }
 
   ngOnInit(): void {
   }
 
-  createNewContact() {
-
+  async getNewContactData(){
+    await this.contactsservice.createNewContact(this.inputservice.name, this.inputservice.email, this.inputservice.phoneNumber)
+    this.newContactForm.reset();
+    this.contactsservice.closeAddContact('createNewContact');
   }
+
+
 
 }

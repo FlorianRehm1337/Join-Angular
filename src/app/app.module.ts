@@ -26,6 +26,8 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dialog.component';
 import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ShortNamePipe } from './short-name.pipe';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-d
     HeaderComponent,
     NavbarComponent,
     AddContactDialogComponent,
-    EditContactDialogComponent
+    EditContactDialogComponent,
+    ShortNamePipe
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-d
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatDialogModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

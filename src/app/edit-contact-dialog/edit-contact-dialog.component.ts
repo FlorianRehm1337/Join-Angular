@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { InputService } from '../shared/services/input.service';
+import { ContactsService } from '../shared/services/contacts.service';
 
 @Component({
   selector: 'app-edit-contact-dialog',
@@ -9,6 +10,8 @@ import { InputService } from '../shared/services/input.service';
   styleUrls: ['./edit-contact-dialog.component.scss']
 })
 export class EditContactDialogComponent implements OnInit {
+
+  @Input() detailContact: any;
 
   editContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([
@@ -26,13 +29,23 @@ export class EditContactDialogComponent implements OnInit {
     ])),
   });
 
-  constructor(public inputservice: InputService) { }
+  constructor(public inputservice: InputService, public contactsservice: ContactsService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.editContactForm.get('name')?.setValue(this.detailContact.name);
+    this.editContactForm.get('email')?.setValue(this.detailContact.email);
+    this.editContactForm.get('phoneNumber')?.setValue(this.detailContact.phoneNumber);
+
   }
 
-  editContact() {
-
+  async getEditContactData() {
+    await this.contactsservice.editContact(
+      this.editContactForm.get('name')?.value,
+      this.editContactForm.get('email')?.value,
+      this.editContactForm.get('phoneNumber')?.value,
+      this.detailContact.color)
+    this.editContactForm.reset();
+    this.contactsservice.closeEditContact('editContactForm');
   }
 
 }

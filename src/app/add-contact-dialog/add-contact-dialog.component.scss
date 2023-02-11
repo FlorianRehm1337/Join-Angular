@@ -63,6 +63,7 @@
   position: absolute;
   top: 16px;
   right: 16px;
+  cursor: pointer;
 }
 
 .profile {
@@ -154,8 +155,12 @@ form {
     cursor: pointer;
     margin-top: 32px;
 
-    &:hover {
+    &:hover:enabled {
       background: #29abe2;
+    }
+
+    &:disabled{
+      opacity: 0.5;
     }
   }
 
@@ -212,6 +217,7 @@ form {
   }
 
   .cross-dark {
+    cursor: pointer;
     position: absolute;
     top: 24px;
     right: 48px;

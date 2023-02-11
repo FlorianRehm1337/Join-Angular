@@ -1,31 +1,30 @@
-<button click="openAddContact()">New contact
+<button (click)="contactsservice.openAddContact()">New contact
   <img src="assets/img/icons-add-contact.svg" alt="add-contact.svg">
 </button>
 
 <div class="main-contact-wrapper">
-  <div *ngIf="!detailView && windowWidth < 1000 || !detailView && windowWidth > 1000 || detailView && windowWidth > 1000" class="contactlist-container">
+  <div
+    *ngIf="!detailView && windowWidth < 1000 || !detailView && windowWidth > 1000 || detailView && windowWidth > 1000"
+    class="contactlist-container">
     <div class="character-list">
-      <div class="single-list">
-        <h2>A</h2>
-      </div>
-      <div (click)="openDetailView()" class="contact">
-        <div class="background-contact-characters">
-          <h2 class="contact-characters">TS</h2>
+      <ng-container *ngFor="let character of allCharacters">
+        <div *ngIf="filterCharacters(character).length > 0" class="single-list">
+          <h2>{{character}}</h2>
         </div>
-        <div class="contact-info">
-          <h2>Test User</h2>
-          <span>test@test.de</span>
-        </div>
-      </div>
-      <div class="contact">
-        <div class="background-contact-characters">
-          <h2 class="contact-characters">TS</h2>
-        </div>
-        <div class="contact-info">
-          <h2>Test User</h2>
-          <span>test@test.de</span>
-        </div>
-      </div>
+        <ng-container *ngFor="let contact of filterCharacters(character); let i = index">
+          <div (click)="openDetailView(contact.email)" class="contact">
+            <div [style.background-color]="contact?.color" class="background-contact-characters">
+              <h2 class="contact-characters">{{ contact?.name | shortName}}</h2>
+            </div>
+            <div class="contact-info">
+              <h2>{{contact?.name}}</h2>
+              <span>{{contact?.email}}</span>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+
     </div>
   </div>
 
@@ -40,27 +39,35 @@
       <div class="blue-border-bottom"></div>
     </div>
     <div class="contact-name-container">
-      <div class="background-contact-characters-detail">
-        <h2 class="contact-characters">AM</h2>
+      <div [style.background-color]="contactsservice.allContacts[contactIndex].color" class="background-contact-characters-detail">
+        <h2 class="contact-characters">{{contactsservice.allContacts[contactIndex].name | shortName }}</h2>
       </div>
-      <h2>Anton Mayer</h2>
+      <h2>{{contactsservice.allContacts[contactIndex].name}}</h2>
     </div>
     <div class="info-edit-container">
-      <h4>Contact Information</h4>
-      <div>
+      <h4 style="margin: 0">Contact Information</h4>
+      <div (click)="editContact(contactsservice.allContacts[contactIndex])">
         <img class="edit-desktop" src="assets/img/pencil-no-bg.svg" alt="pencil-no-bg.svg">
-        <p>Edit Contact</p>
+        <p style="margin: 0">Edit Contact</p>
+      </div>
+      <div (click)="deleteContact()">
+        <img style="filter: invert(75%) sepia(80%) saturate(3498%) hue-rotate(1deg) brightness(104%) contrast(106%);" src="assets/img/trash.png" alt="trash.png">
+        <p style="color: #ff3c00; margin: 0;">Delete Contact</p>
       </div>
     </div>
     <div class="email-section">
       <b>Email</b>
-      <p>wolf@gmail.com</p>
+      <p>{{contactsservice.allContacts[contactIndex].email}}</p>
     </div>
     <div class="phone-section">
       <b>Phone</b>
-      <p>+49 0123456789</p>
+      <p>{{contactsservice.allContacts[contactIndex].phoneNumber}}</p>
     </div>
-    <img class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.svg">
+    <img (click)="deleteContact()" class="delete-mobile" src="assets/img/trash.png" alt="trash.png">
+    <img class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.png">
   </div>
 
 </div>
+
+<app-add-contact-dialog *ngIf="contactsservice.openAddNewContact"></app-add-contact-dialog>
+<app-edit-contact-dialog [detailContact]="contactsservice.allContacts[contactIndex]" *ngIf="contactsservice.openEditContact"></app-edit-contact-dialog>

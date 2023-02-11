@@ -27,7 +27,7 @@ export class AuthService{
   app = initializeApp(environment.firebase);
   db = getFirestore(this.app);
 
-  checkAuthState() {
+  async checkAuthState() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
@@ -66,6 +66,7 @@ export class AuthService{
 
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
+        debugger;
         const user = userCredential.user;
         if (user) {
           this.setUserData(user)
@@ -153,7 +154,6 @@ export class AuthService{
       let docInQueue = document.data();
       if (docInQueue['uid'] == user.uid) {
         console.log(document.data()['email']);
-
 
         const userData = {
           uid: document.data()['uid'],

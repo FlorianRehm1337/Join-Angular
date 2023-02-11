@@ -11,6 +11,7 @@ export class InputService {
   name: string = '';
   email: string = '';
   password: string = '';
+  phoneNumber: string = '';
 
   constructor(public authservice: AuthService) { }
 
@@ -28,4 +29,10 @@ export class InputService {
     this.authservice.loginFailed = false;
     this.password = event.value
   }
+
+  onChangePhoneNumber(event: any) {
+    this.phoneNumber = event.value
+  }
+
+
 }

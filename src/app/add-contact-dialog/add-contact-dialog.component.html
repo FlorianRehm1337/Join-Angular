@@ -1,7 +1,7 @@
 <div class="add-contact-container">
   <div class="add-contact-wrapper">
     <div class="add-contact-dark">
-      <img class="cross-white" src="assets/img/icon-cross.png" alt="cross.png">
+      <img (click)="contactsservice.closeAddContact('createNewContact')" class="cross-white" src="assets/img/icon-cross.png" alt="cross.png">
       <img class="join-logo-white" src="assets/img/logo-white.svg" alt="logo-white.svg">
       <h1>Add contact</h1>
       <div class="font-wrapper">
@@ -12,9 +12,11 @@
       <img class="profile" src="assets/img/empty-profile.png" alt="contact-profile.png">
     </div>
     <div class="add-contact-light">
-      <img class="cross-dark" src="assets/img/icon-cross.png" alt="cross.png">
-      <form (ngSubmit)="createNewContact()" [formGroup]="newContactForm" action="">
-        <input formControlName="name" placeholder="Name" type="text">
+      <img (click)="contactsservice.closeAddContact('createNewContact')" class="cross-dark" src="assets/img/icon-cross.png" alt="cross.png">
+      <form #createNewContact (ngSubmit)="getNewContactData()" [formGroup]="newContactForm" action="">
+
+        <!-- Name Input -->
+        <input (change)="inputservice.onChangeName($event.target)" formControlName="name" placeholder="Name" type="text">
         <ng-container *ngIf="newContactForm.controls['name'] as username">
           <ng-container class="input-container" *ngIf="username.dirty || username.touched">
             <ng-container *ngIf="username.errors as errors">
@@ -24,7 +26,9 @@
             </ng-container>
           </ng-container>
         </ng-container>
-        <input formControlName="email" placeholder="Email" type="email">
+
+        <!-- Email Input -->
+        <input (change)="inputservice.onChangeEmail($event.target)" formControlName="email" placeholder="Email" type="email">
         <ng-container *ngIf="newContactForm.controls['email'] as email">
           <ng-container class="input-container" *ngIf="email.dirty || email.touched">
             <ng-container *ngIf="email.errors as errors">
@@ -33,7 +37,9 @@
             </ng-container>
           </ng-container>
         </ng-container>
-        <input formControlName="phoneNumber" placeholder="Phone" type="number">
+
+        <!-- Phone Number Input -->
+        <input (change)="inputservice.onChangePhoneNumber($event.target)" formControlName="phoneNumber" placeholder="Phone" type="text" inputmode="numeric">
         <ng-container *ngIf="newContactForm.controls['phoneNumber'] as phoneNumber">
           <ng-container class="input-container" *ngIf="phoneNumber.dirty || phoneNumber.touched">
             <ng-container *ngIf="phoneNumber.errors as errors">
@@ -41,11 +47,13 @@
             </ng-container>
           </ng-container>
         </ng-container>
+
+        <!-- Button Container -->
         <div class="btn-container">
-          <button type="submit">Cancel
+          <button (click)="contactsservice.closeAddContact('createNewContact')" type="submit">Cancel
             <img src="assets/img/icon-cross.png" alt="cross.png">
           </button>
-          <button type="submit">Create contact
+          <button [disabled]="newContactForm.invalid" type="submit">Create contact
             <img src="assets/img/icon-check-white.png" alt="check.png">
           </button>
         </div>

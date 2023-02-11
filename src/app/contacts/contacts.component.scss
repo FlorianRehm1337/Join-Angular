@@ -24,10 +24,6 @@ button {
   overflow-y: scroll;
 }
 
-.character-list {
-  height: 10000px; //testing only
-}
-
 .single-list {
   width: 100%;
   border-bottom: 1px solid #d1d1d1;
@@ -48,7 +44,7 @@ button {
 
 .background-contact-characters {
   border-radius: 100%;
-  background-color: lightblue;
+  color: white;
   width: 42px;
   height: 42px;
 
@@ -144,6 +140,7 @@ button {
 
 .info-edit-container {
   h4 {
+    margin: 24px 0 !important;
     font-size: 21px;
     font-weight: 400;
   }
@@ -157,6 +154,18 @@ button {
   p {
     color: #007cee;
   }
+}
+
+.delete-mobile{
+  background-color: #d83200;
+  position: absolute;
+  bottom: 42px;
+  right: 100px;
+  padding: 8px;
+  border-radius: 10px;
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
 }
 
 .edit-mobile {
@@ -193,16 +202,18 @@ button {
     min-height: calc(100vh - 80px);
     width: 100%;
   }
+
+
 }
 
 @media (min-width: 1000px) {
   button {
-    z-index: 2;
+    z-index: 1;
   }
 
   .contactlist-container {
     margin-left: 250px;
-    width: 320px;
+    max-width: 450px;
     margin-top: 0;
     max-height: calc(100vh - 80px);
   }
@@ -222,8 +233,10 @@ button {
 
   .info-edit-container {
     display: flex;
-    max-width: 400px;
+    max-width: 550px;
     justify-content: space-between;
+    margin: 32px 0;
+
     h4 {
       font-size: 21px;
       font-weight: 400;
@@ -233,6 +246,7 @@ button {
       width: 24px;
       height: 24px;
       object-fit: contain;
+      margin-right: 8px;
     }
 
     div {
@@ -259,9 +273,17 @@ button {
   .blue-border-bottom {
     display: none;
   }
+
+  .delete-mobile{
+    display: none;
+  }
+
+  .edit-mobile{
+    display: none;
+  }
 }
 
-@media (min-width: 1050px) {
+@media (min-width: 1200px) {
   .contact-detail-container {
     padding: 37px;
   }
@@ -305,7 +327,7 @@ button {
     width: calc(100% - 450px - 250px);
   }
 
-  .contactlist-container{
+  .contactlist-container {
     width: 450px;
   }
 }

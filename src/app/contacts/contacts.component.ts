@@ -1,5 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-
+import { ContactsService } from '../shared/services/contacts.service';
+import { FirestoreService } from '../shared/services/firestore.service';
+import { AuthService } from '../shared/services/auth.service';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -7,8 +9,17 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class ContactsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public contactsservice: ContactsService, public firestoreService: FirestoreService, public authService: AuthService) { }
+
+  
   windowWidth: number = window.innerWidth;
+  openedAddNewContact: boolean = false;
+  contactIndex: number = 0;
+  allCharacters: Array<any> = [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+    'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+    'Y', 'Z'];
 
   @HostListener('window:resize') onResize(){
 
@@ -23,19 +34,34 @@ export class ContactsComponent implements OnInit {
 
   detailView: boolean = false; //hide contactlist
   isDesktopView: boolean = false;
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.authService.checkAuthState()
+    await this.firestoreService.getCurrentuser();
+    this.contactsservice.loadContactsFromDB();
   }
 
-  openDetailView(){
+  openDetailView(contactEmail: string){
     this.detailView = true;
+    this.contactIndex = this.contactsservice.allContacts.findIndex(contact => contact.email == contactEmail);
   }
 
   closeDetailView(){
     this.detailView = false;
   }
 
-  openAddContact(){
+  filterCharacters(character: string){
+    return this.contactsservice.allContacts.filter(contact => contact.name[0] == character);
+  }
 
+  editContact(currentDetailContact: Object){
+    this.contactsservice.openEditContact = true;
+    console.log(currentDetailContact);
+  }
+
+  deleteContact(){
+    this.contactsservice.allContacts.splice(this.contactIndex, 1);
+    this.firestoreService.updateUserContacts(this.contactsservice.allContacts);
+    this.closeDetailView();
   }
 
 }
