@@ -15,7 +15,7 @@ export class EditContactDialogComponent implements OnInit {
 
   editContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([
-      Validators.pattern(/^[A-Z]+[a-z]+ [A-Z]+[a-z]+$/),
+      Validators.pattern(/^[A-Z]+[a-zßäöü]+ [A-Z]+[a-zßäöü]+$/),
       Validators.required
     ])),
     email: new FormControl('', Validators.compose([

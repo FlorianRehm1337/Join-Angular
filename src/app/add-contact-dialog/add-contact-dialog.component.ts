@@ -13,7 +13,7 @@ export class AddContactDialogComponent implements OnInit {
 
   newContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([
-      Validators.pattern(/^[A-Z]+[a-zß]+ [A-Z]+[a-zß]+$/),
+      Validators.pattern(/^[A-Z]+[a-zßäöü]+ [A-Z]+[a-zßäöü]+$/),
       Validators.required
     ])),
     email: new FormControl('', Validators.compose([

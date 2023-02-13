@@ -1,7 +1,7 @@
 <div class="addtask-main-container">
   <span class="sub-headline">Kanban Project Management Tool</span>
   <h1>Add Task</h1>
-  <form action="">
+  <form [formGroup]="addTaskForm" action="">
     <div class="left-form">
       <div class="input-container">
         <span>Title</span>
@@ -30,7 +30,8 @@
 
       <div class="input-container">
         <span>Due date</span>
-        <input placeholder="Enter a title" type="date">
+        <input formControlName="presentDate" id="datePicker" placeholder="{{date}}" type="date"
+          min="{{this.date | date:'yyyy-MM-dd'}}">
       </div>
     </div>
     <div class="right-form">
@@ -51,15 +52,18 @@
           </div>
           <div *ngIf="categoriesOpened && !newCategory" class="custom-list">
             <span (click)="showInputField()">New Category</span>
-            <span>Sales</span>
-            <span>Backoffice</span>
-            <span>Development</span>
-            <span>Sales</span>
-            <span>Backoffice</span>
-            <span>Development</span>
-            <span>Sales</span>
-            <span>Backoffice</span>
-            <span>Development</span>
+            <ng-container>
+              <span>Sales</span>
+              <span>Backoffice</span>
+              <span>Development</span>
+              <span>Sales</span>
+              <span>Backoffice</span>
+              <span>Development</span>
+              <span>Sales</span>
+              <span>Backoffice</span>
+              <span>Development</span>
+            </ng-container>
+
             <!-- +Farben jeweils Pro Kategorie -->
           </div>
         </div>

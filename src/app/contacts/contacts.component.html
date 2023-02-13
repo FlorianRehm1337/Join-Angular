@@ -7,12 +7,12 @@
     *ngIf="!detailView && windowWidth < 1000 || !detailView && windowWidth > 1000 || detailView && windowWidth > 1000"
     class="contactlist-container">
     <div class="character-list">
-      <ng-container *ngFor="let character of allCharacters">
+      <ng-container *ngFor="let character of allCharacters; let c = index">
         <div *ngIf="filterCharacters(character).length > 0" class="single-list">
           <h2>{{character}}</h2>
         </div>
         <ng-container *ngFor="let contact of filterCharacters(character); let i = index">
-          <div (click)="openDetailView(contact.email)" class="contact">
+          <div [class.active]="selectedIndex === i + c" (click)="openDetailView(contact.email); handleActiveContact(i + c)" class="contact">
             <div [style.background-color]="contact?.color" class="background-contact-characters">
               <h2 class="contact-characters">{{ contact?.name | shortName}}</h2>
             </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="email-section">
       <b>Email</b>
-      <p>{{contactsservice.allContacts[contactIndex].email}}</p>
+      <a href="mailto:{{contactsservice.allContacts[contactIndex].email}}">{{contactsservice.allContacts[contactIndex].email}}</a>
     </div>
     <div class="phone-section">
       <b>Phone</b>

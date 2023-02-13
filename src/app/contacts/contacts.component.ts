@@ -11,10 +11,11 @@ export class ContactsComponent implements OnInit {
 
   constructor(public contactsservice: ContactsService, public firestoreService: FirestoreService, public authService: AuthService) { }
 
-  
+
   windowWidth: number = window.innerWidth;
   openedAddNewContact: boolean = false;
   contactIndex: number = 0;
+  selectedIndex!: number;;
   allCharacters: Array<any> = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -62,6 +63,10 @@ export class ContactsComponent implements OnInit {
     this.contactsservice.allContacts.splice(this.contactIndex, 1);
     this.firestoreService.updateUserContacts(this.contactsservice.allContacts);
     this.closeDetailView();
+  }
+
+  handleActiveContact(i: number){
+    this.selectedIndex = i;
   }
 
 }
