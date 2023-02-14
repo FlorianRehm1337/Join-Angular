@@ -33,4 +33,11 @@ export class FirestoreService {
       contacts: contactsArray
     });
   }
+
+  async updateUserCategories(categoriesArray: Array<any>) {
+    const contactsRef = doc(db, 'Users', this.currentUserDocID);
+    await updateDoc(contactsRef, {
+      categories: categoriesArray
+    });
+  }
 }

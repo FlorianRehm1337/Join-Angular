@@ -55,6 +55,7 @@ export class ContactsService {
       email: email,
       phoneNumber: phoneNumber,
       color: this.getColor(),
+      checked: false,
     }
 
     this.allContacts.push(newContact);

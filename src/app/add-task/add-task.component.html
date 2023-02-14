@@ -5,7 +5,7 @@
     <div class="left-form">
       <div class="input-container">
         <span>Title</span>
-        <input placeholder="Enter a title" type="text">
+        <input style="height: 42px" placeholder="Enter a title" type="text">
       </div>
 
       <div class="input-container">
@@ -16,13 +16,13 @@
       <div class="input-container">
         <span>Priority</span>
         <div class="prio-container">
-          <button (click)="getActiveButton('urgent')" [ngClass]="{'urgent-btn': currentSelection === 'urgent'}">Urgent
+          <button (click)="getActiveButton('urgent')" [ngClass]="{'urgent-btn': selectedPrio === 'urgent'}">Urgent
             <img src="assets/img/prio-urgent.svg" alt="prio-urgent.svg">
           </button>
-          <button (click)="getActiveButton('medium')" [ngClass]="{'medium-btn': currentSelection === 'medium'}">Medium
+          <button (click)="getActiveButton('medium')" [ngClass]="{'medium-btn': selectedPrio === 'medium'}">Medium
             <img src="assets/img/prio-medium.svg" alt="prio-urgent.svg">
           </button>
-          <button (click)="getActiveButton('low')" [ngClass]="{'low-btn': currentSelection === 'low'}">Low
+          <button (click)="getActiveButton('low')" [ngClass]="{'low-btn': selectedPrio === 'low'}">Low
             <img src="assets/img/prio-low.svg" alt="prio-urgent.svg">
           </button>
         </div>
@@ -39,32 +39,35 @@
         <span>Category</span>
         <div [@openCategories]="categoriesOpened ? 'end' : 'start'" (click)="openCategories()"
           [ngClass]="{'full-height': categoriesOpened === true}" class="drop-down-container">
-          <div *ngIf="newCategory" class="new-category-container">
-            <input type="text">
+          <div *ngIf="newCategoryOpened" class="new-category-container">
+            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="newCategoryValue"
+              style="width: 100%; font-size: 21px !important;" type="text">
+            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="newCategoryColorValue" class="color-input"
+              type="color">
             <div class="new-category-icon-container">
               <img (click)="cancelCategory()" src="assets/img/icons-cancel.svg" alt="cancel.svg">
               <img (click)="addCategory()" src="assets/img/icon-check.png" alt="check.png">
             </div>
           </div>
-          <div *ngIf="!newCategory">
-            <span>Select task category</span>
-            <img src="assets/img/icon-arrow-down-scroll.png" alt="arrow-bottom.svg">
+          <div *ngIf="!newCategoryOpened">
+            <span *ngIf="!categorySelected">Select task category</span>
+            <img *ngIf="!categorySelected" src="assets/img/icon-arrow-down-scroll.png" alt="arrow-bottom.svg">
+            <span *ngIf="categorySelected">{{ choosenCategory?.name }}</span>
+            <div *ngIf="categorySelected" class="category-color" [style.background-color]="choosenCategory?.color">
+            </div>
           </div>
-          <div *ngIf="categoriesOpened && !newCategory" class="custom-list">
-            <span (click)="showInputField()">New Category</span>
-            <ng-container>
-              <span>Sales</span>
-              <span>Backoffice</span>
-              <span>Development</span>
-              <span>Sales</span>
-              <span>Backoffice</span>
-              <span>Development</span>
-              <span>Sales</span>
-              <span>Backoffice</span>
-              <span>Development</span>
-            </ng-container>
+          <div *ngIf="categoriesOpened && !newCategoryOpened" class="contacts-list">
+            <span class="new-category-font" (click)="showInputField()">New Category</span>
+            <ng-container *ngFor="let category of allCategories; let i = index">
+              <div (click)="chooseCategory(i)" class="category">
+                <div>
+                  <span class="category-name">{{ category.name }}</span>
+                  <div class="category-color" [style.background-color]="category.color"></div>
+                </div>
 
-            <!-- +Farben jeweils Pro Kategorie -->
+                <img (click)="deleteCategory(i)" class="category-trash" src="/assets/img/trash.png" alt="trash.png">
+              </div>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -77,19 +80,13 @@
             <span>Select contacts to assign</span>
             <img src="assets/img/icon-arrow-down-scroll.png" alt="arrow-bottom.svg">
           </div>
-          <div *ngIf="asigneesOpened" class="custom-list">
-            <div class="assignee-container">
-              <span>Flo</span>
-              <input type="checkbox">
-            </div>
-            <div class="assignee-container">
-              <span>Rebecca</span>
-              <input type="checkbox">
-            </div>
-            <div class="assignee-container">
-              <span>Testuser</span>
-              <input type="checkbox">
-            </div>
+          <div *ngIf="asigneesOpened" class="contacts-list">
+            <ng-container *ngFor="let contact of allContacts; let i = index">
+              <div (click)="handleChecked(i,$event)" class="assignee-container">
+                <span [ngClass]="{'checked-contacts': contact.checked}">{{ contact.name }}</span>
+                <input [checked]="contact.checked" (click)="handleChecked(i,$event)" id="contact{{i}}" type="checkbox">
+              </div>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -97,9 +94,20 @@
       <div class="input-container">
         <span>Subtasks</span>
         <div class="subtask-container">
-          <input placeholder="Add new subtask" type="text">
+          <input [(ngModel)]="subtaskInput" [ngModelOptions]="{standalone: true}" placeholder="Add new subtask"
+            type="text">
           <img (click)="addSubtask()" src="assets/img/icon-add-plus.svg" alt="icon-add.svg">
         </div>
+        <ng-container *ngFor="let subtask of createdSubtasks; let i = index">
+          <div class="subTask">
+            <div>
+              <input type="checkbox" id="subtask{{i}}">
+              <span>{{ subtask }}</span>
+            </div>
+            <img (click)="deleteSubtask(i)" class="category-trash" src="/assets/img/trash.png" alt="trash.png">
+          </div>
+        </ng-container>
+
       </div>
 
       <div class="desktop-btn-container">
