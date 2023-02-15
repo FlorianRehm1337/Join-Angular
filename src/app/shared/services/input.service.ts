@@ -13,11 +13,14 @@ export class InputService {
   password: string = '';
   phoneNumber: string = '';
 
+  title: string = '';
+  description: string = '';
+
   constructor(public authservice: AuthService) { }
 
   onChangeName(event: any) {
     this.authservice.loginFailed = false;
-    this.name = event.value
+    this.name = event.value;
   }
 
   onChangeEmail(event: any) {
@@ -27,11 +30,19 @@ export class InputService {
 
   onChangePassword(event: any) {
     this.authservice.loginFailed = false;
-    this.password = event.value
+    this.password = event.value;
   }
 
   onChangePhoneNumber(event: any) {
-    this.phoneNumber = event.value
+    this.phoneNumber = event.value;
+  }
+
+  onChangeTitle(event: any) {
+    this.title = event.value;
+  }
+
+  onChangeDescription(event: any) {
+    this.description = event.value;
   }
 
 

@@ -40,4 +40,11 @@ export class FirestoreService {
       categories: categoriesArray
     });
   }
+
+  async updateUserTasks(tasksArray: Array<any>) {
+    const contactsRef = doc(db, 'Users', this.currentUserDocID);
+    await updateDoc(contactsRef, {
+      allTasks: tasksArray
+    });
+  }
 }

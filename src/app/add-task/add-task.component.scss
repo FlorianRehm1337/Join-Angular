@@ -33,6 +33,13 @@
     border: 1px solid #d1d1d1;
     border-radius: 10px;
     outline: none;
+
+    &.ng-touched,
+    &.ng-dirty {
+      &.ng-invalid {
+        border: red solid 2px;
+      }
+    }
   }
 
   input[type="date"]::placeholder {
@@ -220,8 +227,7 @@
   width: 16px;
   height: 16px;
   object-fit: contain;
-  filter: invert(75%) sepia(80%) saturate(3498%)
-   hue-rotate(1deg) brightness(104%) contrast(106%);
+  filter: invert(75%) sepia(80%) saturate(3498%) hue-rotate(1deg) brightness(104%) contrast(106%);
 }
 
 .color-input {
@@ -293,7 +299,7 @@
     border: none;
   }
 
-  img{
+  img {
     cursor: pointer;
   }
 }
@@ -303,6 +309,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 8px 0;
+  cursor: pointer;
 
   input[type="checkbox"] {
     width: unset;
@@ -326,12 +333,18 @@
   color: white;
   font-size: 21px;
   font-weight: 700;
+  z-index: 1;
 
   img {
     width: 16px;
     height: 16px;
     filter: invert(1);
   }
+}
+
+.error {
+  color: red;
+  margin: 4px;
 }
 
 @media (min-width: 800px) {

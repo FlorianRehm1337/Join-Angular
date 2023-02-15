@@ -1,37 +1,60 @@
 <div class="addtask-main-container">
   <span class="sub-headline">Kanban Project Management Tool</span>
   <h1>Add Task</h1>
-  <form [formGroup]="addTaskForm" action="">
+  <form #createNewContact (ngSubmit)="createNewTask()" [formGroup]="addTaskForm" action="">
     <div class="left-form">
       <div class="input-container">
         <span>Title</span>
-        <input style="height: 42px" placeholder="Enter a title" type="text">
+        <input (change)="inputservice.onChangeTitle($event.target)" formControlName="title" style="height: 42px" placeholder="Enter a title" type="text">
+        <ng-container *ngIf="addTaskForm.controls['title'] as title">
+          <ng-container class="input-container" *ngIf="title.dirty || title.touched">
+            <ng-container *ngIf="title.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please enter a title.</p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </div>
 
       <div class="input-container">
         <span>Description</span>
-        <textarea placeholder="Enter a Description" name="description" id="description" cols="30" rows="4"></textarea>
+        <textarea (change)="inputservice.onChangeDescription($event.target)" formControlName="description" placeholder="Enter a Description" name="description" id="description"
+          cols="30" rows="4"></textarea>
+        <ng-container *ngIf="addTaskForm.controls['description'] as description">
+          <ng-container class="input-container" *ngIf="description.dirty || description.touched">
+            <ng-container *ngIf="description.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please enter a description.</p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </div>
 
       <div class="input-container">
         <span>Priority</span>
         <div class="prio-container">
-          <button (click)="getActiveButton('urgent')" [ngClass]="{'urgent-btn': selectedPrio === 'urgent'}">Urgent
+          <button type="button" (click)="getActiveButton('urgent')" [ngClass]="{'urgent-btn': selectedPrio === 'urgent'}">Urgent
             <img src="assets/img/prio-urgent.svg" alt="prio-urgent.svg">
           </button>
-          <button (click)="getActiveButton('medium')" [ngClass]="{'medium-btn': selectedPrio === 'medium'}">Medium
+          <button type="button" (click)="getActiveButton('medium')" [ngClass]="{'medium-btn': selectedPrio === 'medium'}">Medium
             <img src="assets/img/prio-medium.svg" alt="prio-urgent.svg">
           </button>
-          <button (click)="getActiveButton('low')" [ngClass]="{'low-btn': selectedPrio === 'low'}">Low
+          <button type="button" (click)="getActiveButton('low')" [ngClass]="{'low-btn': selectedPrio === 'low'}">Low
             <img src="assets/img/prio-low.svg" alt="prio-urgent.svg">
           </button>
         </div>
+        <p class="error" *ngIf="selectedPrio == '' && formSubmitted">Please select a priority.</p>
       </div>
 
       <div class="input-container">
         <span>Due date</span>
-        <input formControlName="presentDate" id="datePicker" placeholder="{{date}}" type="date"
+        <input formControlName="date" id="datePicker" placeholder="{{date}}" type="date"
           min="{{this.date | date:'yyyy-MM-dd'}}">
+        <ng-container *ngIf="addTaskForm.controls['date'] as date">
+          <ng-container class="input-container" *ngIf="date.dirty || date.touched">
+            <ng-container *ngIf="date.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please select a date.</p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
     <div class="right-form">
@@ -70,6 +93,13 @@
             </ng-container>
           </div>
         </div>
+        <ng-container *ngIf="addTaskForm.controls['category'] as category">
+          <ng-container class="input-container" *ngIf="category.dirty || category.touched">
+            <ng-container *ngIf="category.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please select a category.</p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </div>
 
       <div class="input-container">
@@ -89,6 +119,13 @@
             </ng-container>
           </div>
         </div>
+        <ng-container *ngIf="addTaskForm.controls['assignees'] as assignees">
+          <ng-container class="input-container" *ngIf="assignees.dirty || assignees.touched">
+            <ng-container *ngIf="assignees.errors as errors">
+              <p class="error" *ngIf="errors?.['required']">Please select assignees.</p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </div>
 
       <div class="input-container">
@@ -99,10 +136,10 @@
           <img (click)="addSubtask()" src="assets/img/icon-add-plus.svg" alt="icon-add.svg">
         </div>
         <ng-container *ngFor="let subtask of createdSubtasks; let i = index">
-          <div class="subTask">
+          <div (click)="handleSubtaskCheck(i, $event)" class="subTask">
             <div>
-              <input type="checkbox" id="subtask{{i}}">
-              <span>{{ subtask }}</span>
+              <input [checked]="subtask.checked" type="checkbox" id="subtask{{i}}">
+              <span [ngClass]="{'checked-contacts': subtask.checked}">{{ subtask.subtask }}</span>
             </div>
             <img (click)="deleteSubtask(i)" class="category-trash" src="/assets/img/trash.png" alt="trash.png">
           </div>
@@ -111,17 +148,17 @@
       </div>
 
       <div class="desktop-btn-container">
-        <button>Clear
-          <img (click)="cancelTask()" src="assets/img/icons-cancel.svg" alt="cancel.svg">
+        <button type="button" (click)="cancelTask()">Clear
+          <img src="assets/img/icons-cancel.svg" alt="cancel.svg">
         </button>
-        <button (click)="createTask()">Create Task
+        <button type="submit">Create Task
           <img src="assets/img/icon-check.png" alt="check.svg">
         </button>
 
       </div>
     </div>
 
-    <button (click)="createTask()" class="create-btn-mobile" *ngIf="router.url == '/addtask'" type="submit">Create
+    <button type="submit" class="create-btn-mobile" *ngIf="router.url == '/addtask'">Create
       <img src="assets/img/icon-check.png" alt="check.svg">
     </button>
   </form>
