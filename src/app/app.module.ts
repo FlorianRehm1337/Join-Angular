@@ -28,6 +28,7 @@ import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dial
 import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ShortNamePipe } from './short-name.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { ShortNamePipe } from './short-name.pipe';
     ReactiveFormsModule,
     MatInputModule,
     MatDialogModule,
+    DragDropModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

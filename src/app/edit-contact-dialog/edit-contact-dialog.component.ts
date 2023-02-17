@@ -12,6 +12,7 @@ import { ContactsService } from '../shared/services/contacts.service';
 export class EditContactDialogComponent implements OnInit {
 
   @Input() detailContact: any;
+  
 
   editContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([

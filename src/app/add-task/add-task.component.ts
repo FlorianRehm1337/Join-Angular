@@ -173,8 +173,9 @@ export class AddTaskComponent implements OnInit {
 
   async createNewTask() {
     this.formSubmitted = true;
-    let selectedAssignees = this.allContacts.filter((contact: { checked: any; }) => contact.checked)
-    let allCheckedSubtasks = this.createdSubtasks.filter((subtask: { checked: any; }) => subtask.checked)
+    let selectedAssignees = this.allContacts.filter((contact: { checked: any; }) => contact.checked);
+    let allCheckedSubtasks = this.createdSubtasks.filter((subtask: { checked: any; }) => subtask.checked);
+    allCheckedSubtasks.forEach((subtask: {checked: boolean}) => {subtask.checked = false});
     const newTask = {
       title: this.inputservice.title,
       description: this.inputservice.description,
@@ -183,6 +184,7 @@ export class AddTaskComponent implements OnInit {
       category: this.choosenCategory,
       assignee: selectedAssignees,
       subtasks: allCheckedSubtasks,
+      status: 'todo',
     }
     this.allTasks.push(newTask);
     await this.firestoreService.updateUserTasks(this.allTasks);

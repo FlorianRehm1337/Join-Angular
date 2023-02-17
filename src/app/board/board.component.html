@@ -1,1 +1,169 @@
-<p>board works!</p>
+<div class="board-main-container">
+  <span class="sub-headline">Kanban Project Management Tool</span>
+
+  <div class="headline-container">
+    <h1>Board</h1>
+    <div class="desktop-search-wrapper">
+      <div class="search-container-desktop">
+        <input [(ngModel)]="searchInput" placeholder="Find Task" type="text">
+        <img src="assets/img/icon-loupe.svg" alt="loupe.svg">
+      </div>
+
+      <button>
+        <p>Add Task</p>
+        <img src="/assets/img/icon-add-plus.svg" alt="addtask.svg">
+      </button>
+    </div>
+  </div>
+
+  <div class="search-container">
+    <input [(ngModel)]="searchInput" placeholder="Find Task" type="text">
+    <img src="assets/img/icon-loupe.svg" alt="loupe.svg">
+  </div>
+
+  <div class="status-container-wrapper">
+    <div class="status-container">
+      <h2>To Do</h2>
+
+      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="tasksTodo"
+        [cdkDropListConnectedTo]="[doneList,inProgressList,awaitFeedbackList]" class="task-container"
+        (cdkDropListDropped)="drop($event)">
+        <p *ngIf="tasksTodo.length == 0">There are no tasks here!</p>
+        <ng-container *ngFor="let task of tasksTodo; let i = index">
+          <div class="example-custom-placeholder" *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+            <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
+            <h4>{{ task.title }}</h4>
+            <p class="task-description">{{ task.description }}</p>
+            <div class="subtask-progress">
+              <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
+                <div [style.width.%]="calculateProgress(i, tasksTodo)" class="progress-bar"></div>
+              </div>
+
+              <div class="progress-status">
+                <p>{{ calculateCheckedSubtasks(i, tasksTodo) }}/{{ task.subtasks.length }}</p>
+                <p>Done</p>
+              </div>
+            </div>
+            <div class="assigned-contacts">
+              <ng-container *ngFor="let taskContacts of task.assignee; let j = index">
+                <div [style.transform]="'translateX('+ (j * -5) +'px)'" [style.background-color]="taskContacts.color">
+                  <p>{{ taskContacts.name | shortName}}</p>
+                </div>
+              </ng-container>
+            </div>
+            <img class="prio-img" [src]="checkPriority(i, tasksTodo)">
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+
+    <div class="status-container">
+      <h2>In Progress</h2>
+
+      <div cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="tasksInProgress"
+        [cdkDropListConnectedTo]="[todoList,awaitFeedbackList,doneList]" class="task-container"
+        (cdkDropListDropped)="drop($event)">
+        <p *ngIf="tasksInProgress.length == 0">There are no tasks here!</p>
+        <ng-container *ngFor="let task of tasksInProgress; let i = index">
+          <div *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+            <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
+            <h4>{{ task.title }}</h4>
+            <p class="task-description">{{ task.description }}</p>
+            <div class="subtask-progress">
+              <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
+                <div [style.width.%]="calculateProgress(i, tasksInProgress)" class="progress-bar"></div>
+              </div>
+
+              <div class="progress-status">
+                <p>{{ calculateCheckedSubtasks(i, tasksInProgress) }}/{{ task.subtasks.length }}</p>
+                <p>Done</p>
+              </div>
+            </div>
+            <div class="assigned-contacts">
+              <ng-container *ngFor="let taskContacts of task.assignee; let j = index">
+                <div [style.transform]="'translateX('+ (j * -5) +'px)'" [style.background-color]="taskContacts.color">
+                  <p>{{ taskContacts.name | shortName}}</p>
+                </div>
+              </ng-container>
+            </div>
+            <img class="prio-img" [src]="checkPriority(i, tasksInProgress)">
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="status-container">
+      <h2>Awaiting Feedback</h2>
+
+      <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="tasksAwaitingFeedback"
+        [cdkDropListConnectedTo]="[doneList,inProgressList,todoList]" class="task-container"
+        (cdkDropListDropped)="drop($event)">
+        <p *ngIf="tasksAwaitingFeedback.length == 0">There are no tasks here!</p>
+        <ng-container *ngFor="let task of tasksAwaitingFeedback; let i = index">
+          <div *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+            <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
+            <h4>{{ task.title }}</h4>
+            <p class="task-description">{{ task.description }}</p>
+            <div class="subtask-progress">
+              <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
+                <div [style.width.%]="calculateProgress(i, tasksAwaitingFeedback)" class="progress-bar"></div>
+              </div>
+
+              <div class="progress-status">
+                <p>{{ calculateCheckedSubtasks(i, tasksAwaitingFeedback) }}/{{ task.subtasks.length }}</p>
+                <p>Done</p>
+              </div>
+            </div>
+            <div class="assigned-contacts">
+              <ng-container *ngFor="let taskContacts of task.assignee; let j = index">
+                <div [style.transform]="'translateX('+ (j * -5) +'px)'" [style.background-color]="taskContacts.color">
+                  <p>{{ taskContacts.name | shortName}}</p>
+                </div>
+              </ng-container>
+            </div>
+            <img class="prio-img" [src]="checkPriority(i, tasksAwaitingFeedback)">
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="status-container">
+      <h2>Done</h2>
+
+      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="tasksDone"
+        [cdkDropListConnectedTo]="[todoList,inProgressList,awaitFeedbackList]" class="task-container"
+        (cdkDropListDropped)="drop($event)">
+        <p *ngIf="tasksDone.length == 0">There are no tasks here!</p>
+        <ng-container *ngFor="let task of tasksDone; let i = index">
+          <div *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+            <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
+            <h4>{{ task.title }}</h4>
+            <p class="task-description">{{ task.description }}</p>
+            <div class="subtask-progress">
+              <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
+                <div [style.width.%]="calculateProgress(i, tasksDone)" class="progress-bar"></div>
+              </div>
+
+              <div class="progress-status">
+                <p>{{ calculateCheckedSubtasks(i, tasksDone) }}/{{ task.subtasks.length }}</p>
+                <p>Done</p>
+              </div>
+            </div>
+            <div class="assigned-contacts">
+              <ng-container *ngFor="let taskContacts of task.assignee; let j = index">
+                <div [style.transform]="'translateX('+ (j * -5) +'px)'" [style.background-color]="taskContacts.color">
+                  <p>{{ taskContacts.name | shortName}}</p>
+                </div>
+              </ng-container>
+            </div>
+            <img class="prio-img" [src]="checkPriority(i, tasksDone)">
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

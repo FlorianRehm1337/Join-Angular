@@ -1,0 +1,283 @@
+::placeholder {
+  color: rgb(215, 215, 215);
+  opacity: 1;
+}
+
+.board-main-container {
+  padding: 32px;
+  padding-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: calc(100vh - 80px);
+  background-color: #f6f7f8;
+}
+
+.headline-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    font-size: 47px;
+    font-weight: 700;
+  }
+
+  button {
+    background-color: #2a3647;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    p {
+      color: white;
+      margin: 0;
+      font-weight: 700;
+      font-size: 21px;
+      line-height: 120%;
+      display: none;
+    }
+  }
+
+  img {
+    filter: invert(1);
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+}
+
+.search-container-desktop {
+  display: none;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  border-radius: 10px;
+  background-color: white;
+  min-height: 42px;
+  max-width: 250px;
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    margin: 8px 8px 8px 20px;
+  }
+
+  img {
+    padding: 4px 16px;
+    height: fit-content;
+    border-left: 1.5px solid #d1d1d1;
+    cursor: pointer;
+  }
+}
+
+.task-container {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+   > p:first-child{
+    position: absolute;
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 32px;
+  }
+}
+
+.status-container {
+  h2 {
+    font-size: 21px;
+    font-weight: 700;
+    color: #2a3647;
+  }
+}
+
+.task {
+  background: #ffffff;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 30px;
+  margin: 20px 0;
+  padding: 20px;
+  position: relative;
+  max-width: 350px;
+  width: 100%;
+  cursor: pointer;
+
+  h4 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 120%;
+    color: #2a3647;
+    margin: 15px 0 10px 0;
+  }
+}
+
+.task-category {
+  color: white;
+  font-size: 16px;
+  line-height: 120%;
+  width: fit-content;
+  padding: 4px 25px;
+  border-radius: 8px;
+}
+
+.task-description {
+  color: #a8a8a8;
+  margin: 0 0 18px 0;
+}
+
+.subtask-progress {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 15px;
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.unfilled-progress-bar {
+  border-radius: 5px;
+}
+
+.progress-bar {
+  background-color: #29abe2;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.progress-status {
+  display: flex;
+  gap: 6px;
+}
+
+.assigned-contacts {
+  display: flex;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    border: 1px solid white;
+  }
+
+  p {
+    color: white;
+    font-size: 12px;
+  }
+}
+
+.prio-img {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+@media (min-width: 800px) {
+  .board-main-container {
+    margin-left: 250px;
+  }
+
+  .sub-headline {
+    display: none;
+  }
+
+  .headline-container {
+
+    h1 {
+      font-size: 61px;
+      font-weight: 700;
+    }
+
+    button {
+      padding: 13px 10px;
+      gap: 10px;
+      p {
+        display: unset;
+      }
+    }
+  }
+
+  .status-container-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 950px;
+    gap: 28px;
+  }
+
+  .task-container {
+    align-items: unset;
+    width: 300px;
+  }
+
+  .task {
+    width: 300px;
+  }
+}
+
+@media (min-width: 950px){
+  .status-container-wrapper{
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1200px) {
+  .desktop-search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .search-container{
+    display: none;
+  }
+
+  .search-container-desktop {
+    display: flex;
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    border-radius: 10px;
+    background-color: white;
+    min-height: 42px;
+    max-width: 250px;
+
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+      margin: 8px 8px 8px 20px;
+    }
+
+    img {
+      padding: 4px 16px;
+      height: fit-content;
+      border-left: 1.5px solid #d1d1d1;
+      cursor: pointer;
+      filter: unset !important;
+      width: unset;
+    }
+  }
+}
+
+
+@media (min-width: 1600px){
+  .status-container-wrapper {
+    max-width: unset;
+  }
+}
