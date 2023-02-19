@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener,Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FirestoreService } from '../shared/services/firestore.service';
 import { AuthService } from '../shared/services/auth.service';
@@ -16,8 +16,23 @@ export class BoardComponent implements OnInit {
   tasksAwaitingFeedback: any[] = [];
   tasksDone: any[] = [];
   searchInput: string = '';
+  showTaskDetail: boolean = false; //false by default
+  isDesktopView: boolean = false;
+  windowWidth: number = window.innerWidth;
+  detailTask: any ;
 
   constructor(public firestoreService: FirestoreService, public authService: AuthService) { }
+
+  @HostListener('window:resize') onResize() {
+
+    this.windowWidth = window.innerWidth;
+    console.log(this.isDesktopView)
+    if (this.windowWidth > 1000) {
+      this.isDesktopView = true;
+    } else {
+      this.isDesktopView = false;
+    }
+  }
 
   async ngOnInit() {
     await this.authService.checkAuthState();
@@ -87,5 +102,10 @@ export class BoardComponent implements OnInit {
            task.category.name.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()) ||
            task.description.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()) ||
            task.priority.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase())
+  }
+
+  openDetailTask(i: number, array: Array<any>){
+    this.showTaskDetail = true;
+    this.detailTask = array[i];
   }
 }

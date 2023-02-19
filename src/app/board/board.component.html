@@ -1,4 +1,4 @@
-<div class="board-main-container">
+<div [class.d-scrollable]="showTaskDetail == true" class="board-main-container">
   <span class="sub-headline">Kanban Project Management Tool</span>
 
   <div class="headline-container">
@@ -9,7 +9,7 @@
         <img src="assets/img/icon-loupe.svg" alt="loupe.svg">
       </div>
 
-      <button>
+      <button routerLink="/addtask">
         <p>Add Task</p>
         <img src="/assets/img/icon-add-plus.svg" alt="addtask.svg">
       </button>
@@ -30,7 +30,7 @@
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksTodo.length == 0">There are no tasks here!</p>
         <ng-container *ngFor="let task of tasksTodo; let i = index">
-          <div class="example-custom-placeholder" *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+          <div (click)="openDetailTask(i, tasksTodo)" *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
@@ -66,7 +66,7 @@
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksInProgress.length == 0">There are no tasks here!</p>
         <ng-container *ngFor="let task of tasksInProgress; let i = index">
-          <div *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+          <div (click)="openDetailTask(i, tasksInProgress)" *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
@@ -101,7 +101,7 @@
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksAwaitingFeedback.length == 0">There are no tasks here!</p>
         <ng-container *ngFor="let task of tasksAwaitingFeedback; let i = index">
-          <div *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+          <div (click)="openDetailTask(i, tasksAwaitingFeedback)" *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
@@ -136,7 +136,7 @@
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksDone.length == 0">There are no tasks here!</p>
         <ng-container *ngFor="let task of tasksDone; let i = index">
-          <div *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
+          <div (click)="openDetailTask(i, tasksDone)" *ngIf="checkMatchWithSearch(task)" class="task" cdkDrag>
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
@@ -163,7 +163,6 @@
       </div>
     </div>
   </div>
-
-
-
 </div>
+
+<app-task-detail (showTaskDetail)="showTaskDetail = false" [clickedTask]="detailTask" [windowWidth]=windowWidth *ngIf="showTaskDetail"></app-task-detail>

@@ -15,7 +15,9 @@ export class ContactsComponent implements OnInit {
   windowWidth: number = window.innerWidth;
   openedAddNewContact: boolean = false;
   contactIndex: number = 0;
-  selectedIndex!: number;;
+  selectedIndex!: number;
+  detailView: boolean = false; //hide contactlist
+  isDesktopView: boolean = true;
   allCharacters: Array<any> = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -32,9 +34,6 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-
-  detailView: boolean = false; //hide contactlist
-  isDesktopView: boolean = false;
   async ngOnInit() {
     await this.authService.checkAuthState()
     await this.firestoreService.getCurrentuser();

@@ -64,7 +64,7 @@
       <p>{{contactsservice.allContacts[contactIndex].phoneNumber}}</p>
     </div>
     <img (click)="deleteContact()" class="delete-mobile" src="assets/img/trash.png" alt="trash.png">
-    <img class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.png">
+    <img (click)="editContact(contactsservice.allContacts[contactIndex])" class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.png">
   </div>
 
 </div>

@@ -1,0 +1,56 @@
+<div *ngIf="!editTaskOpened" class="task-detail-main-container">
+  <div class="task-detail-container">
+
+    <div class="category-header">
+      <div [style.background-color]="clickedTask.category.color">
+        <span>{{ clickedTask.category.name }}</span>
+      </div>
+      <img (click)="closeTaskDetail()" *ngIf="windowWidth < 800" class="arrow-back" src="assets/img/icon-arrow-left.svg"
+        alt="back.png">
+      <img (click)="closeTaskDetail()" *ngIf="windowWidth > 800" class="cross-dark" src="assets/img/icon-cross.png"
+        alt="cross.png">
+    </div>
+    <h2>{{ clickedTask.title }}</h2>
+    <p>{{ clickedTask.description }}</p>
+    <div class="task-date">
+      <b>Due Date:</b>
+      <p>{{ clickedTask.date.seconds * 1000 | date:'dd/MM/yyyy'}}</p>
+    </div>
+    <div class="task-prio">
+      <b>Priority:</b>
+      <div [style.background-color]="getPrioBackground(clickedTask.priority)">
+        <p>{{ clickedTask.priority }}</p>
+        <img [src]="getPrioImage(clickedTask.priority)" alt="prio-img.svg">
+      </div>
+    </div>
+    <div class="task-assignee-container">
+      <b>Assigned To:</b>
+      <div class="assignee-wrapper">
+        <ng-container *ngFor="let assignee of clickedTask.assignee">
+          <div class="task-assignees">
+            <div class="shortName" [style.background-color]="assignee.color">
+              <p>{{assignee.name | shortName}}</p>
+            </div>
+            <p>{{ assignee.name }}</p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="task-subtasks">
+      <b>Subtasks:</b>
+      <ng-container *ngFor="let subtask of clickedTask.subtasks; let i = index">
+        <div class="subtask">
+          <input [checked]="subtask.checked" (click)="handleChecked(i,$event)" id="contact{{i}}" type="checkbox">
+          <p>{{ subtask.subtask }}</p>
+        </div>
+      </ng-container>
+      <div class="edit-trash-container">
+        <img (click)="deleteTask()" class="delete-mobile" src="assets/img/trash.png" alt="trash.png">
+        <img (click)="openEditTask()" class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.png">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-task-detail-edit (editTaskOpened)="editTaskOpened = false" [taskToEdit]="clickedTask" *ngIf="editTaskOpened"></app-task-detail-edit>

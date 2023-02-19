@@ -1,0 +1,69 @@
+<div class="task-detail-main-container">
+  <div class="task-detail-container">
+
+    <div>
+      <p>Title</p>
+      <input [(ngModel)]="taskToEdit.title" type="text">
+    </div>
+    <div>
+      <p>Description</p>
+      <textarea [(ngModel)]="taskToEdit.description" type="text"></textarea>
+    </div>
+    <div>
+      <p>Due date</p>
+      <input [ngModel]="(taskToEdit.date.seconds * 1000) | date:'yyyy-MM-dd'" name="taskToEdit.date" type="date">
+    </div>
+    <div class="input-container">
+      <p>Priority</p>
+      <div class="prio-container">
+        <button type="button" (click)="getActiveButton('urgent')"
+          [ngClass]="{'urgent-btn': selectedPrio === 'urgent'}">Urgent
+          <img src="assets/img/prio-urgent.svg" alt="prio-urgent.svg">
+        </button>
+        <button type="button" (click)="getActiveButton('medium')"
+          [ngClass]="{'medium-btn': selectedPrio === 'medium'}">Medium
+          <img src="assets/img/prio-medium.svg" alt="prio-urgent.svg">
+        </button>
+        <button type="button" (click)="getActiveButton('low')" [ngClass]="{'low-btn': selectedPrio === 'low'}">Low
+          <img src="assets/img/prio-low.svg" alt="prio-urgent.svg">
+        </button>
+      </div>
+    </div>
+    <div class="input-container">
+      <p>Assigned to</p>
+      <div [@openCategories]="asigneesOpened ? 'end' : 'start'" [ngClass]="{'full-height': asigneesOpened === true}"
+        class="drop-down-container">
+        <div (click)="openAssignees()">
+          <span>Select contacts to assign</span>
+          <img src="assets/img/icon-arrow-down-scroll.png" alt="arrow-bottom.svg">
+        </div>
+        <div *ngIf="asigneesOpened" class="contacts-list">
+          <ng-container *ngFor="let contact of taskToEdit.assignee; let i = index">
+            <div (click)="handleChecked(i,$event)" class="assignee-container">
+              <span [ngClass]="{'checked-contacts': contact.checked}">{{ contact.name }}</span>
+              <input [checked]="contact.checked" (click)="handleChecked(i,$event)" id="contact{{i}}" type="checkbox">
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="contact-wrapper">
+        <ng-container *ngFor="let contact of taskToEdit.assignee">
+
+          <div *ngIf="contact.checked" [style.background-color]="contact.color">
+            <p>{{ contact.name | shortName }}</p>
+          </div>
+
+        </ng-container>
+      </div>
+
+    </div>
+
+    <button (click)="saveTaskChanges()" class="save-edit">
+      <p>OK</p>
+      <img src="assets/img/icon-check-white.png" alt="pencil.png">
+
+    </button>
+
+  </div>
+
+</div>

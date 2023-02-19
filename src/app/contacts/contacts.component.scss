@@ -17,8 +17,8 @@ button {
   padding: 8px;
 }
 
-.active{
-  background-color: #2A3647 !important;
+.active {
+  background-color: #2a3647 !important;
   color: white;
 }
 
@@ -48,7 +48,6 @@ button {
   margin-bottom: 16px;
   cursor: pointer;
   border-radius: 10px;
-
 }
 
 .background-contact-characters {
@@ -169,7 +168,7 @@ button {
   }
 }
 
-.delete-mobile{
+.delete-mobile {
   background-color: #d83200;
   position: absolute;
   bottom: 42px;
@@ -215,8 +214,6 @@ button {
     min-height: calc(100vh - 80px);
     width: 100%;
   }
-
-
 }
 
 @media (min-width: 1000px) {
@@ -249,6 +246,7 @@ button {
     max-width: 550px;
     justify-content: space-between;
     margin: 32px 0;
+    align-items: center;
 
     h4 {
       font-size: 21px;
@@ -266,6 +264,7 @@ button {
       display: flex;
       align-items: center;
       cursor: pointer;
+      height: fit-content;
     }
   }
 
@@ -287,11 +286,11 @@ button {
     display: none;
   }
 
-  .delete-mobile{
+  .delete-mobile {
     display: none;
   }
 
-  .edit-mobile{
+  .edit-mobile {
     display: none;
   }
 }

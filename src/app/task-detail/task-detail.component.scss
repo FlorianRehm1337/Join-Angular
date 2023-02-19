@@ -1,0 +1,177 @@
+.task-detail-main-container {
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 160px);
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+}
+
+.task-detail-container {
+  position: relative;
+  padding: 60px 32px 120px 32px;
+  z-index: 1;
+
+  h2 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  b {
+    margin: 12px 0;
+  }
+
+  p {
+    margin: 12px 0;
+  }
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    color: white;
+    font-size: 21px;
+    line-height: 120%;
+  }
+
+  div {
+    border-radius: 8px;
+    padding: 4px 36px;
+  }
+}
+
+.arrow-back {
+  width: 16px;
+}
+
+.cross-dark {
+  cursor: pointer;
+  position: absolute;
+  top: 24px;
+  right: 48px;
+  filter: invert(75%) sepia(4%) saturate(4915%) hue-rotate(177deg) brightness(89%) contrast(85%);
+}
+
+.task-date {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.task-prio {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  div {
+    display: flex;
+    gap: 16px;
+    padding: 4px 18px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  p {
+    margin: 0;
+    color: white;
+  }
+}
+
+.task-assignee-container {
+  margin-top: 12px;
+}
+
+.assignee-wrapper {
+  margin-top: 32px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-assignees {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.shortName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+
+  p {
+    color: white;
+  }
+}
+
+.edit-trash-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.edit-mobile {
+  background-color: #2a3647;
+  padding: 8px;
+  border-radius: 10px;
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.delete-mobile {
+  background-color: #d83200;
+  padding: 8px;
+  border-radius: 10px;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+}
+
+.task-subtasks {
+  margin-top: 32px;
+}
+
+.subtask {
+  display: flex;
+  margin-top: 24px;
+  gap: 16px;
+
+  input{
+     cursor: pointer;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+@media (min-width: 800px) {
+  .task-detail-main-container {
+    background-color: rgba(0, 0, 0, 0.3);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .task-detail-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 625px;
+    max-height: 825px;
+    background-color: white;
+    width: 100%;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+  }
+}

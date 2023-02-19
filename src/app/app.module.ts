@@ -29,6 +29,8 @@ import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-d
 import { MatDialogModule } from '@angular/material/dialog';
 import { ShortNamePipe } from './short-name.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TaskDetailComponent } from './task-detail/task-detail.component';
+import { TaskDetailEditComponent } from './task-detail-edit/task-detail-edit.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NavbarComponent,
     AddContactDialogComponent,
     EditContactDialogComponent,
-    ShortNamePipe
+    ShortNamePipe,
+    TaskDetailComponent,
+    TaskDetailEditComponent
   ],
   imports: [
     BrowserModule,
