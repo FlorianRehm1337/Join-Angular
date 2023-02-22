@@ -9,16 +9,16 @@
     <div class="task-overview">
       <div class="task-toprow">
         <div class="tasks-in-board">
-          <h1>5</h1>
+          <h1>{{ dataFromUser?.allTasks.length }}</h1>
           <p>Tasks in<br>Board</p>
         </div>
         <div class="tasks-in-progress">
-          <h1>5</h1>
-          <p>Tasks in<br>Board</p>
+          <h1>{{ taskService.tasksInProgress.length }}</h1>
+          <p>Tasks in<br>Progress</p>
         </div>
         <div class="tasks-awaiting-feedback">
-          <h1>5</h1>
-          <p>Tasks in<br>Board</p>
+          <h1>{{ taskService.tasksAwaitingFeedback.length }}</h1>
+          <p>Awaiting Feedback</p>
         </div>
       </div>
       <div class="upcoming-task">
@@ -26,12 +26,12 @@
           <img src="assets/img/icon-urgent-white.svg" alt="urgent-white.svg">
         </div>
         <div class="urgent-wrapper">
-          <h1>1</h1>
+          <h1>{{ taskService.urgentTasks.length }}</h1>
           <p>Urgent</p>
         </div>
         <div class="gray-line"></div>
         <div class="date-wrapper">
-          <b>Date</b>
+          <b>{{ taskService.urgentTasks[0].date | date  }}</b>
           <p>Upcoming Deadline</p>
         </div>
       </div>
@@ -41,7 +41,7 @@
             <img src="assets/img/white_pencil.svg" alt="pencil-svg">
           </div>
           <div class="todo-wrapper">
-            <h1>1</h1>
+            <h1>{{ taskService.tasksTodo.length }}</h1>
             <p>To Do</p>
           </div>
         </div>
@@ -50,15 +50,15 @@
             <img src="assets/img/white-check.svg" alt="check.svg">
           </div>
           <div class="done-wrapper">
-            <h1>1</h1>
+            <h1>{{ taskService.tasksDone.length }}</h1>
             <p>Done</p>
           </div>
         </div>
       </div>
     </div>
     <div class="greeting-container">
-      <h2>Good morning,</h2>
-      <h1>Variable</h1>
+      <h2>{{ checkCurrentTime() }},</h2>
+      <h1>{{ dataFromUser?.displayName }}</h1>
     </div>
   </div>
 </div>

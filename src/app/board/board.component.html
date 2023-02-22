@@ -34,7 +34,7 @@
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
-            <div class="subtask-progress">
+            <div *ngIf="task.subtasks.length != 0" class="subtask-progress">
               <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
                 <div [style.width.%]="calculateProgress(i, tasksTodo)" class="progress-bar"></div>
               </div>
@@ -70,7 +70,7 @@
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
-            <div class="subtask-progress">
+            <div *ngIf="task.subtasks.length != 0" class="subtask-progress">
               <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
                 <div [style.width.%]="calculateProgress(i, tasksInProgress)" class="progress-bar"></div>
               </div>
@@ -105,7 +105,7 @@
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
-            <div class="subtask-progress">
+            <div *ngIf="task.subtasks.length != 0" class="subtask-progress">
               <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
                 <div [style.width.%]="calculateProgress(i, tasksAwaitingFeedback)" class="progress-bar"></div>
               </div>
@@ -140,7 +140,7 @@
             <div [style.background-color]="task.category.color" class="task-category">{{task.category.name}}</div>
             <h4>{{ task.title }}</h4>
             <p class="task-description">{{ task.description }}</p>
-            <div class="subtask-progress">
+            <div *ngIf="task.subtasks.length != 0" class="subtask-progress">
               <div style="width: 100%; background-color: #F4F4F4; height: 10px;" class="unfilled-progress-bar">
                 <div [style.width.%]="calculateProgress(i, tasksDone)" class="progress-bar"></div>
               </div>

@@ -85,14 +85,17 @@ export class TaskDetailEditComponent implements OnInit {
     switch (prio) {
       case 'low':
         this.selectedPrio = 'low';
+        this.taskToEdit.priority = 'low';
         return
 
       case 'medium':
         this.selectedPrio = 'medium';
+        this.taskToEdit.priority = 'medium';
         return
 
       case 'urgent':
         this.selectedPrio = 'urgent';
+        this.taskToEdit.priority = 'urgent';
         return
 
       default: '';
@@ -112,6 +115,7 @@ export class TaskDetailEditComponent implements OnInit {
   }
 
   saveTaskChanges() {
+    debugger;
     let checkedAssignees = this.taskToEdit.assignee.filter((contact: { checked: any; }) => contact.checked)
     this.taskToEdit.assignee = checkedAssignees;
     this.allTasks[this.taskIndex] = this.taskToEdit;
@@ -126,6 +130,10 @@ export class TaskDetailEditComponent implements OnInit {
         this.taskToEdit.assignee.push(this.allContacts[i]);
       }
     }
+  }
+
+  getDateValue(event:any){
+    this.taskToEdit.date = event;
   }
 
 }

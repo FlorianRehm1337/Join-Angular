@@ -37,7 +37,7 @@ export class AddTaskComponent implements OnInit {
     priority: new FormControl('', Validators.compose([
       Validators.required
     ])),
-    date: new FormControl((new Date()).toISOString().substring(0, 10), Validators.compose([
+    date: new FormControl((new Date()).toISOString().slice(0, 10), Validators.compose([
       Validators.required,
     ])),
     category: new FormControl([], Validators.compose([
@@ -72,7 +72,8 @@ export class AddTaskComponent implements OnInit {
   constructor(public router: Router, public contactsservice: ContactsService, public firestoreService: FirestoreService, public authService: AuthService, public inputservice: InputService) { }
 
   async ngOnInit() {
-    this.date = new Date;
+    debugger;
+    //this.date = new Date();
     await this.authService.checkAuthState();
     await this.firestoreService.getCurrentuser();
     this.allCategories = this.firestoreService.currentUserData.categories;
@@ -172,6 +173,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   async createNewTask() {
+    debugger;
     this.formSubmitted = true;
     let selectedAssignees = this.allContacts.filter((contact: { checked: any; }) => contact.checked);
     let allCheckedSubtasks = this.createdSubtasks.filter((subtask: { checked: any; }) => subtask.checked);
@@ -180,7 +182,7 @@ export class AddTaskComponent implements OnInit {
       title: this.inputservice.title,
       description: this.inputservice.description,
       priority: this.selectedPrio,
-      date: this.date,
+      date: this.inputservice.date,
       category: this.choosenCategory,
       assignee: selectedAssignees,
       subtasks: allCheckedSubtasks,

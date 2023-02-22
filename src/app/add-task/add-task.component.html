@@ -46,7 +46,7 @@
 
       <div class="input-container">
         <span>Due date</span>
-        <input formControlName="date" id="datePicker" placeholder="{{date}}" type="date"
+        <input (change)="inputservice.onChangeDate($event.target)" formControlName="date" id="datePicker" placeholder="{{date}}" type="date"
           min="{{this.date | date:'yyyy-MM-dd'}}">
         <ng-container *ngIf="addTaskForm.controls['date'] as date">
           <ng-container class="input-container" *ngIf="date.dirty || date.touched">

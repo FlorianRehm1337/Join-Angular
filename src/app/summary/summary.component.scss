@@ -252,6 +252,10 @@
 
   .upcoming-task {
     min-height: 150px;
+
+    p{
+      font-size: 16px;
+    }
   }
 
   .urgent-bg {
@@ -284,8 +288,33 @@
     }
   }
 
+  .tasks-in-board{
+
+    p{
+      font-size: 21px;
+    }
+  }
+
+  .tasks-in-progress{
+
+    p{
+      font-size: 21px;
+    }
+  }
+
+  .tasks-awaiting-feedback{
+
+    p{
+      font-size: 21px;
+    }
+  }
+
   .tasks-in-todo {
     gap: 32px;
+
+    p{
+      font-size: 21px;
+    }
   }
 
   .tasks-in-done {

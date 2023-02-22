@@ -14,7 +14,7 @@
     <p>{{ clickedTask.description }}</p>
     <div class="task-date">
       <b>Due Date:</b>
-      <p>{{ clickedTask.date.seconds * 1000 | date:'dd/MM/yyyy'}}</p>
+      <p>{{ clickedTask.date | date:'dd/MM/yyyy'}}</p>
     </div>
     <div class="task-prio">
       <b>Priority:</b>

@@ -11,7 +11,7 @@
     </div>
     <div>
       <p>Due date</p>
-      <input [ngModel]="(taskToEdit.date.seconds * 1000) | date:'yyyy-MM-dd'" name="taskToEdit.date" type="date">
+      <input (ngModelChange)="getDateValue($event)" [ngModel]="taskToEdit.date" name="taskToEdit.date" type="date">
     </div>
     <div class="input-container">
       <p>Priority</p>

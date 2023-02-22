@@ -10,6 +10,11 @@ export class FirestoreService {
 
   currentUserDocID: any;
   currentUserData : any;
+
+  tasksTodo: any[] = [];
+  tasksInProgress: any[] = [];
+  tasksAwaitingFeedback: any[] = [];
+  tasksDone: any[] = [];
   constructor(private authService: AuthService) {
 
 

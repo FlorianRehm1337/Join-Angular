@@ -12,6 +12,7 @@ export class InputService {
   email: string = '';
   password: string = '';
   phoneNumber: string = '';
+  date: any;
 
   title: string = '';
   description: string = '';
@@ -43,6 +44,10 @@ export class InputService {
 
   onChangeDescription(event: any) {
     this.description = event.value;
+  }
+
+  onChangeDate(event: any){
+    this.date = event.value;
   }
 
 
