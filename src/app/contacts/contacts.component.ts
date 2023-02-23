@@ -2,10 +2,28 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ContactsService } from '../shared/services/contacts.service';
 import { FirestoreService } from '../shared/services/firestore.service';
 import { AuthService } from '../shared/services/auth.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.scss']
+  styleUrls: ['./contacts.component.scss'],
+  animations: [
+    trigger('openClose', [
+      // ...
+      state('from', style({
+        bottom: '-100px'
+      })),
+      state('to', style({
+        bottom: '100px'
+      })),
+      transition('* => closed', [
+        animate('1s')
+      ]),
+      transition('* => open', [
+        animate('0.5s')
+      ]),
+    ]),
+  ],
 })
 export class ContactsComponent implements OnInit {
 
@@ -18,6 +36,7 @@ export class ContactsComponent implements OnInit {
   selectedIndex!: number;
   detailView: boolean = false; //hide contactlist
   isDesktopView: boolean = true;
+
   allCharacters: Array<any> = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',

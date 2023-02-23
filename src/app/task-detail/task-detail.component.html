@@ -36,7 +36,7 @@
         </ng-container>
       </div>
     </div>
-    <div class="task-subtasks">
+    <div *ngIf="clickedTask.subtasks.length != 0" class="task-subtasks">
       <b>Subtasks:</b>
       <ng-container *ngFor="let subtask of clickedTask.subtasks; let i = index">
         <div class="subtask">

@@ -63,6 +63,13 @@
     border: 1px solid #d1d1d1;
     border-radius: 10px;
     outline: none;
+
+    &.ng-touched,
+    &.ng-dirty {
+      &.ng-invalid {
+        border: red solid 2px;
+      }
+    }
   }
 }
 
@@ -340,11 +347,36 @@
     height: 16px;
     filter: invert(1);
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .error {
   color: red;
   margin: 4px;
+}
+
+.feedback {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 50px;
+  background: #2a3647;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+
+  span {
+    color: white;
+    font-size: 16px;
+  }
 }
 
 @media (min-width: 800px) {
@@ -466,6 +498,15 @@
 
       img {
         filter: invert(1);
+      }
+
+      &:hover:enabled {
+        background: #29abe2;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
   }

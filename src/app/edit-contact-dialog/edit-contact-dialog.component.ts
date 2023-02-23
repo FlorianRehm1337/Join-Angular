@@ -12,7 +12,7 @@ import { ContactsService } from '../shared/services/contacts.service';
 export class EditContactDialogComponent implements OnInit {
 
   @Input() detailContact: any;
-  
+
 
   editContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([
@@ -47,6 +47,11 @@ export class EditContactDialogComponent implements OnInit {
       this.detailContact.color)
     this.editContactForm.reset();
     this.contactsservice.closeEditContact('editContactForm');
+    this.contactsservice.contactEdited = true;
+
+    setTimeout(() => {
+      this.contactsservice.contactEdited = false;
+    }, 1500)
   }
 
 }

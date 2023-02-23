@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { FirestoreService } from '../shared/services/firestore.service';
-import { TaskService } from '../shared/task.service';
+import { TaskService } from '../shared/services/task.service';
 
 @Component({
   selector: 'app-summary',
@@ -52,8 +52,8 @@ export class SummaryComponent implements OnInit {
 
   sortUrgentTasks() {
     this.taskService.urgentTasks.sort(function (a, b) {
-      var c: any = new Date(a.date);
-      var d: any = new Date(b.date);
+      let c: any = new Date(a.date);
+      let d: any = new Date(b.date);
       return c - d;
     })
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FirestoreService } from './services/firestore.service';
-import { AuthService } from './services/auth.service';
+import { FirestoreService } from './firestore.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,12 @@ export class TaskService {
   tasksDone: any[] = [];
   urgentTasks: any[] = [];
 
+  createdTask: boolean = false;
+
   constructor(public firestoreService: FirestoreService, public authService: AuthService,) {
   }
 
-  getAllTasks(){
+  getAllTasks() {
     this.allTasks = this.firestoreService.currentUserData.allTasks;
   }
 

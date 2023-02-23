@@ -69,5 +69,11 @@
 
 </div>
 
+<div *ngIf="this.contactsservice.contactEdited" class="feedback">
+<span>Contact succesfully edited</span>
+</div>
+<div *ngIf="this.contactsservice.contactCreated" class="feedback">
+  <span>Contact succesfully created</span>
+</div>
 <app-add-contact-dialog *ngIf="contactsservice.openAddNewContact"></app-add-contact-dialog>
 <app-edit-contact-dialog [detailContact]="contactsservice.allContacts[contactIndex]" *ngIf="contactsservice.openEditContact"></app-edit-contact-dialog>

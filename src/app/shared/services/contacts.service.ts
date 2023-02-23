@@ -9,6 +9,8 @@ export class ContactsService {
   openAddNewContact: boolean = false;
   openEditContact: boolean = false;
   allContacts: any[] = [];
+  contactCreated: boolean = false;
+  contactEdited: boolean = false;
   possibleHexcolorCharacters: any[] = [
     'A', 'B', 'C', 'D', 'E', 'F',
     '0', '1', '2', '3', '4',

@@ -7,6 +7,7 @@ import { FirestoreService } from '../shared/services/firestore.service';
 import { AuthService } from '../shared/services/auth.service';
 import { Task } from '../shared/services/task';
 import { InputService } from '../shared/services/input.service';
+import { TaskService } from '../shared/services/task.service';
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
@@ -43,13 +44,6 @@ export class AddTaskComponent implements OnInit {
     category: new FormControl([], Validators.compose([
       Validators.required
     ])),
-    assignees: new FormControl([], Validators.compose([
-      Validators.required
-    ])),
-    /* subtasks: new FormControl('', Validators.compose([
-      Validators.pattern(/^[A-Z]+[a-zßäöü]+ [A-Z]+[a-zßäöü]+$/),
-      Validators.required
-    ])), */
 
   });
 
@@ -69,22 +63,26 @@ export class AddTaskComponent implements OnInit {
   categorySelected: boolean = false;
   subtaskInput: string = '';
   date: string | number | Date | undefined;
-  constructor(public router: Router, public contactsservice: ContactsService, public firestoreService: FirestoreService, public authService: AuthService, public inputservice: InputService) { }
+
+  constructor(public router: Router,
+    public contactsservice: ContactsService,
+    public firestoreService: FirestoreService,
+    public authService: AuthService,
+    public inputservice: InputService,
+    public taskService: TaskService) { }
 
   async ngOnInit() {
-    debugger;
     //this.date = new Date();
     await this.authService.checkAuthState();
     await this.firestoreService.getCurrentuser();
     this.allCategories = this.firestoreService.currentUserData.categories;
     this.allContacts = this.firestoreService.currentUserData.contacts;
     this.allTasks = this.firestoreService.currentUserData.allTasks;
-
   }
 
   getActiveButton(prio: string) {
     this.selectedPrio = prio;
-    console.log(this.addTaskForm);
+    this.addTaskForm.value.priority = prio;
   }
 
   openCategories() {
@@ -102,14 +100,14 @@ export class AddTaskComponent implements OnInit {
   chooseCategory(i: number) {
     this.choosenCategory = this.allCategories[i];
     this.categorySelected = true;
-    console.log(this.choosenCategory);
-  }
+    this.addTaskForm.value.category = this.choosenCategory;  }
 
   cancelCategory() {
     this.newCategoryOpened = !this.newCategoryOpened;
     this.newCategoryValue = '';
     this.newCategoryColorValue = '';
     this.categorySelected = false;
+    this.choosenCategory = undefined;
   }
 
   async addCategory() {
@@ -122,7 +120,7 @@ export class AddTaskComponent implements OnInit {
       this.allCategories.push(newCategory);
       await this.firestoreService.updateUserCategories(this.allCategories);
       this.cancelCategory();
-    }else{
+    } else {
       this.cancelCategory();
     }
 
@@ -173,23 +171,45 @@ export class AddTaskComponent implements OnInit {
   }
 
   async createNewTask() {
-    debugger;
     this.formSubmitted = true;
-    let selectedAssignees = this.allContacts.filter((contact: { checked: any; }) => contact.checked);
-    let allCheckedSubtasks = this.createdSubtasks.filter((subtask: { checked: any; }) => subtask.checked);
-    allCheckedSubtasks.forEach((subtask: {checked: boolean}) => {subtask.checked = false});
-    const newTask = {
-      title: this.inputservice.title,
-      description: this.inputservice.description,
-      priority: this.selectedPrio,
-      date: this.inputservice.date,
-      category: this.choosenCategory,
-      assignee: selectedAssignees,
-      subtasks: allCheckedSubtasks,
-      status: 'todo',
+    console.log(this.addTaskForm)
+    debugger;
+    if (this.checkFormValidation()) {
+      let selectedAssignees = this.allContacts.filter((contact: { checked: any; }) => contact.checked);
+      let allCheckedSubtasks = this.createdSubtasks.filter((subtask: { checked: any; }) => subtask.checked);
+      allCheckedSubtasks.forEach((subtask: { checked: boolean }) => { subtask.checked = false });
+      const newTask = {
+        title: this.addTaskForm.value.title,
+        description: this.addTaskForm.value.description,
+        priority: this.addTaskForm.value.priority,
+        date: this.addTaskForm.value.date,
+        category: this.addTaskForm.value.category,
+        assignee: selectedAssignees ? selectedAssignees : [],
+        subtasks: allCheckedSubtasks ? allCheckedSubtasks : [],
+        status: 'todo',
+      }
+      this.allTasks.push(newTask);
+      await this.firestoreService.updateUserTasks(this.allTasks);
+      this.cancelTask();
+      this.taskService.createdTask = true;
+
+      setTimeout(() => {
+        this.taskService.createdTask = false;
+        this.router.navigateByUrl('/board')
+      }, 1500)
     }
-    this.allTasks.push(newTask);
-    await this.firestoreService.updateUserTasks(this.allTasks);
-    this.cancelTask();
+
+  }
+
+  checkFormValidation() {
+    if (this.addTaskForm.value.title != '' &&
+     this.addTaskForm.value.description != '' &&
+      this.addTaskForm.value.priority != '' &&
+      this.addTaskForm.value.date != '' &&
+       this.addTaskForm.value.category != undefined) {
+        return true;
+    }else{
+      return false;
+    }
   }
 }

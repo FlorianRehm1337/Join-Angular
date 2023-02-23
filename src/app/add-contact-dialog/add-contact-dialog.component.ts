@@ -36,6 +36,11 @@ export class AddContactDialogComponent implements OnInit {
     await this.contactsservice.createNewContact(this.inputservice.name, this.inputservice.email, this.inputservice.phoneNumber)
     this.newContactForm.reset();
     this.contactsservice.closeAddContact('createNewContact');
+    this.contactsservice.contactCreated = true;
+
+    setTimeout(() =>{
+      this.contactsservice.contactCreated = false;
+    }, 1500);
   }
 
 

@@ -192,7 +192,36 @@ button {
   object-fit: contain;
 }
 
+.feedback {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 50px;
+  background: #2a3647;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+
+  span {
+    color: white;
+    font-size: 16px;
+  }
+}
+
 @media (min-width: 800px) {
+  .feedback {
+    width: 326px;
+    height: 74px;
+    span {
+
+      font-size: 21px;
+    }
+  }
   button {
     position: fixed;
     right: 52px;
