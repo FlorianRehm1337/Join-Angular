@@ -8,13 +8,11 @@ import { AuthService } from './auth.service';
 export class TaskService {
 
   allTasks: any[] = [];
-
   tasksTodo: any[] = [];
   tasksInProgress: any[] = [];
   tasksAwaitingFeedback: any[] = [];
   tasksDone: any[] = [];
   urgentTasks: any[] = [];
-
   createdTask: boolean = false;
 
   constructor(public firestoreService: FirestoreService, public authService: AuthService,) {

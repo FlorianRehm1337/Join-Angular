@@ -1,1 +1,31 @@
-<p>help works!</p>
+<div class="help-main-container">
+  <span class="sub-headline">Kanban Project Management Tool</span>
+  <h1>Help</h1>
+  <img [routerLink]="lastRoute" src="assets/img/arrow_left_dark.svg" alt="arrow" />
+
+  <h2>What is Join?</h2>
+  <span>Join is a kanban project managment tool that helps you organize and manage your tasks</span>
+
+  <h2>How to use it?</h2>
+  <div class="step-wrapper">
+    <h3>1.</h3>
+    <span>First, create a task in the <a routerLink="/addtask">add-task section</a>.
+      Choose a title, description and deadline. Assign your team members to the
+      task and choose or create a category. Choose an urgency to quickly see the priority of any task.
+      Optionally create subtasks to divide up your task in smaller steps and therefore see progress easier.
+    </span>
+  </div>
+
+  <div class="step-wrapper">
+    <h3>2.</h3>
+  <span>After creating, your task is moved to the <a routerLink="/board">board</a>. You can also filter your tasks in the board section. So you can see urgent tasks a lot faster.
+        You can also add a new Task in the board section aswell.
+  </span></div>
+
+  <div class="step-wrapper">
+    <h3>3.</h3>
+  <span>Move your tasks by dragging them into the different columns to change their status. Complete your subtasks to see your
+  progress. See detailed information by clicking on a task. Edit your task when necesarry and delete it when it's done or
+  not needed anymore.
+  </span></div>
+</div>

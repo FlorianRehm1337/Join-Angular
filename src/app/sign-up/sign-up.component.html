@@ -1,4 +1,4 @@
-<img class="logo-dark" src="assets/img/join-logo.svg" alt="">
+<img routerLink="/login" class="logo-dark" src="assets/img/join-logo.svg" alt="logo.svg">
 
 
 <div class="signup-main-container">
@@ -15,10 +15,12 @@
           <ng-container class="input-container" *ngIf="username.dirty || username.touched">
             <ng-container *ngIf="username.errors as errors">
               <p class="error" *ngIf="errors?.['required']">Please enter a username.</p>
+              <p class="error" *ngIf="errors?.['pattern']">Please enter the first- and lastname <br>e.g. <b>Max
+                  Mustermann</b>.</p>
               <p class="error" *ngIf="errors?.['minlength']">The username must contain atleast
                 {{errors?.['minlength'].requiredLength}} characters.</p>
             </ng-container>
-          </ng-container> 
+          </ng-container>
         </ng-container>
 
         <input (change)="inputservice.onChangeEmail($event.target)" formControlName="email" name="email" placeholder="Email" type="email">
@@ -43,6 +45,7 @@
         </ng-container>
 
       </div>
+      <span *ngIf="authservice.emailExists" class="error">email address already exists!</span>
       <div class="btn-container">
         <button [disabled]="!(signupForm.valid && (signupForm.dirty || signupForm.touched))" type="submit">Sign
           up</button>

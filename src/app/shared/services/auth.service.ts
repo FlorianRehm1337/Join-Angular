@@ -1,63 +1,47 @@
 import { Injectable } from '@angular/core';
-import { User } from '../services/user';
-import { sendPasswordResetEmail, onAuthStateChanged, browserSessionPersistence, setPersistence, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, browserLocalPersistence } from "firebase/auth";
-import { collection, getDocs, query, where, doc, addDoc, getDoc, updateDoc, DocumentReference } from "firebase/firestore";
+import { sendPasswordResetEmail, onAuthStateChanged, browserSessionPersistence, setPersistence, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, browserLocalPersistence, confirmPasswordReset } from "firebase/auth";
+import { collection, getDocs, doc, addDoc, updateDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 
-export class AuthService{
+export class AuthService {
 
   userData: any;
   loginFailed: boolean = false;
   rememberLogin: boolean = false;
-  auth = getAuth();
-  user = this.auth.currentUser;
-  constructor(private router: Router) {
-
-  }
-
-
+  emailExists: boolean = false;
+  resetEmailSent: boolean = false;
+  emailSentError: boolean = false;
+  newPasswordValid: boolean = false;
   app = initializeApp(environment.firebase);
+  auth = getAuth(this.app);
   db = getFirestore(this.app);
+  user = this.auth.currentUser;
+  constructor(private router: Router) { }
 
   async checkAuthState() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        console.log(user);
         const uid = user.uid;
-        console.log(uid)
         return true;
-        // ...
       } else {
-        console.log(user)
         this.auth.signOut();
-        console.log("User is signed out");
         return false;
-        // User is signed out
-        // ...
       }
     });
   }
 
-  isLoggedIn(){
-    console.log(this.user);
+  isLoggedIn() {
     if (this.user) {
       return true;
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      // ...
     } else {
       return false;
-      // No user is signed in.
     }
 
   }
@@ -66,7 +50,6 @@ export class AuthService{
 
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        debugger;
         const user = userCredential.user;
         if (user) {
           this.setUserData(user)
@@ -80,44 +63,56 @@ export class AuthService{
         }
       })
       .catch((error) => {
-        /* window.alert(error.message); */
         this.loginFailed = true;
       });
   }
 
   async loginAsGuest() {
-    this.LogIn('guest123@test.de','123456')
+    this.LogIn('guest123@test.de', '123456')
   }
 
-  async resetPassword(email:string){
+  async forgetPassword(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then(() => {
-        console.log("Password reset email sent");
-        // Password reset email sent!
-        // ..
+        this.resetEmailSent = true;
+
+        setTimeout(() => {
+          this.resetEmailSent = false;
+        }, 2000)
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+        this.emailSentError = true;
       });
+  }
+
+  async resetPassword(actionCode: string, newPassword: string) {
+    confirmPasswordReset(this.auth, actionCode, newPassword).then(() => {
+      this.newPasswordValid = true;
+
+      setTimeout(() => {
+        this.router.navigateByUrl('/login');
+        this.newPasswordValid = false;
+      }, 2000)
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
   }
 
   async SignUp(username: string, email: string, password: string) {
 
     createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        debugger;
+      .then(async (userCredential) => {
         const user = userCredential.user;
-        console.log(user, username);
-        this.addNewUser(user, username);
-        // ...
+        await this.addNewUser(user, username);
+        this.LogIn(email, password);
+
       })
       .catch((error) => {
+        this.emailExists = true;
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ..
+
       });
   }
 
@@ -127,7 +122,6 @@ export class AuthService{
         return signInWithEmailAndPassword(this.auth, user.email, user.password);
       })
       .catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
       });
@@ -139,7 +133,6 @@ export class AuthService{
         return signInWithEmailAndPassword(this.auth, user.email, user.password);
       })
       .catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
       });
@@ -147,13 +140,11 @@ export class AuthService{
 
 
   async setUserData(user: any) {
-    debugger;
 
     const querySnapshot = await getDocs(collection(this.db, "Users"));
     querySnapshot.forEach((document) => {
       let docInQueue = document.data();
       if (docInQueue['uid'] == user.uid) {
-        console.log(document.data()['email']);
 
         const userData = {
           uid: document.data()['uid'],
@@ -177,32 +168,16 @@ export class AuthService{
       uid: user.uid,
       email: user.email,
       displayName: username,
-      contacts: [],
+      contacts: [{
+        color: "#490B9B",
+        email: user.email,
+        name: username,
+        phoneNumber: ""
+      }],
       allTasks: [],
       emailVerified: user.emailVerified,
       rememberLogin: this.rememberLogin,
     });
-    console.log("Document written with ID: ", docRef.id);
   }
-
-  /* async addGuestUser(user: any, username: string) {
-
-    const docRef = await addDoc(collection(this.db, "Users"), {
-      uid: user.uid,
-      displayName: username,
-      contacts: ['Max Mustermann','Anold Schwarzenegger','Angela Merkel','Tony Test'],
-      allTasks: [{
-        "title": "Mustertask",
-        "description": "Test description",
-        "category": "Development",
-        "assignee": ['Max Mustermann', 'Anold Schwarzenegger'],
-        "date": "01.02.2015",
-        "prio": "medium",
-        "status": "todo",
-        "subtasks": ['Subtask 1', 'Subtask 2'],
-      }],
-    });
-    console.log("Document written with ID: ", docRef.id);
-  } */
 }
 

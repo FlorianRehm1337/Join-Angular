@@ -16,10 +16,10 @@ export const environment = {
 };
 
 const app = initializeApp(environment.firebase);
-const auth = getAuth(app);
-const db = getFirestore(app);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
 
-export {auth,db}
+
 
 /*
  * For easier debugging in development mode, you can import the following file

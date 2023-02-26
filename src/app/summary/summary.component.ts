@@ -22,11 +22,7 @@ export class SummaryComponent implements OnInit {
     this.taskService.getAllTasks();
     this.taskService.filterTasks();
 
-    console.log(this.taskService.urgentTasks);
     this.sortUrgentTasks();
-    console.log(this.taskService.allTasks);
-    console.log(this.taskService.tasksTodo);
-    console.log('sorted', this.taskService.urgentTasks);
   }
 
   checkCurrentTime() {

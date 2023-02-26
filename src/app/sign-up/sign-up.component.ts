@@ -13,7 +13,7 @@ export class SignUpComponent implements OnInit {
 
   signupForm = new FormGroup({
     name: new FormControl('', Validators.compose([
-      /* Validators.pattern('[a-zA-Z]+[a-zA-Z0-9-]'), */
+      Validators.pattern(/^[A-Z]+[a-zßäöü]+ [A-Z]+[a-zßäöü]+$/),
       Validators.minLength(5),
       Validators.maxLength(20),
       Validators.required
@@ -39,7 +39,6 @@ export class SignUpComponent implements OnInit {
 
 
   async createNewUser() {
-    debugger;
     await this.authservice.SignUp(this.inputservice.name, this.inputservice.email, this.inputservice.password);
     this.signupForm.reset();
   }

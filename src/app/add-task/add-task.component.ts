@@ -58,11 +58,12 @@ export class AddTaskComponent implements OnInit {
   asigneesOpened: boolean = false;
   newCategoryOpened: boolean = false;
   newCategoryValue: string = '';
-  newCategoryColorValue: string = '';
+  newCategoryColorValue: string = '#FF8800';
   choosenCategory: any;
   categorySelected: boolean = false;
+  categorySubmitted: boolean = false;
   subtaskInput: string = '';
-  date: string | number | Date | undefined;
+  date: string | number | Date | undefined = new Date();
 
   constructor(public router: Router,
     public contactsservice: ContactsService,
@@ -72,15 +73,16 @@ export class AddTaskComponent implements OnInit {
     public taskService: TaskService) { }
 
   async ngOnInit() {
-    //this.date = new Date();
     await this.authService.checkAuthState();
     await this.firestoreService.getCurrentuser();
-    this.allCategories = this.firestoreService.currentUserData.categories;
-    this.allContacts = this.firestoreService.currentUserData.contacts;
-    this.allTasks = this.firestoreService.currentUserData.allTasks;
+    this.allCategories = this.firestoreService.currentUserData.categories || [];
+    this.allContacts = this.firestoreService.currentUserData.contacts || [];
+    this.allTasks = this.firestoreService.currentUserData.allTasks || [];
+    this.checkIfCurrentUserIsInContactList();
   }
 
   getActiveButton(prio: string) {
+
     this.selectedPrio = prio;
     this.addTaskForm.value.priority = prio;
   }
@@ -100,7 +102,8 @@ export class AddTaskComponent implements OnInit {
   chooseCategory(i: number) {
     this.choosenCategory = this.allCategories[i];
     this.categorySelected = true;
-    this.addTaskForm.value.category = this.choosenCategory;  }
+    this.addTaskForm.value.category = this.choosenCategory;
+  }
 
   cancelCategory() {
     this.newCategoryOpened = !this.newCategoryOpened;
@@ -111,6 +114,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   async addCategory() {
+    this.categorySubmitted = false;
     if (this.newCategoryColorValue != '' && this.newCategoryValue != '') {
       const newCategory = {
         color: this.newCategoryColorValue,
@@ -119,6 +123,9 @@ export class AddTaskComponent implements OnInit {
 
       this.allCategories.push(newCategory);
       await this.firestoreService.updateUserCategories(this.allCategories);
+      this.cancelCategory();
+    } else if (this.newCategoryColorValue == '') {
+      this.categorySubmitted = true;
       this.cancelCategory();
     } else {
       this.cancelCategory();
@@ -157,7 +164,6 @@ export class AddTaskComponent implements OnInit {
   }
 
   cancelTask() {
-    console.log('task cancelled');
     this.selectedPrio = '';
     this.subtaskInput = '';
     this.createdSubtasks = [];
@@ -172,8 +178,6 @@ export class AddTaskComponent implements OnInit {
 
   async createNewTask() {
     this.formSubmitted = true;
-    console.log(this.addTaskForm)
-    debugger;
     if (this.checkFormValidation()) {
       let selectedAssignees = this.allContacts.filter((contact: { checked: any; }) => contact.checked);
       let allCheckedSubtasks = this.createdSubtasks.filter((subtask: { checked: any; }) => subtask.checked);
@@ -203,13 +207,25 @@ export class AddTaskComponent implements OnInit {
 
   checkFormValidation() {
     if (this.addTaskForm.value.title != '' &&
-     this.addTaskForm.value.description != '' &&
+      this.addTaskForm.value.description != '' &&
       this.addTaskForm.value.priority != '' &&
       this.addTaskForm.value.date != '' &&
-       this.addTaskForm.value.category != undefined) {
-        return true;
-    }else{
+      this.addTaskForm.value.category != undefined ||
+      this.addTaskForm.value.category.length != 0
+    ) {
+      return true;
+    } else {
       return false;
+    }
+  }
+
+  checkIfCurrentUserIsInContactList(){
+    let index = this.allContacts.findIndex((contact: { name: any; }) => contact.name == this.firestoreService.currentUserData.displayName);
+    if (index == -1) {
+      this.allContacts.push({
+        name: this.firestoreService.currentUserData.displayName,
+        color: "#490B9B",
+      });
     }
   }
 }

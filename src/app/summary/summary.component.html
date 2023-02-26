@@ -8,20 +8,20 @@
   <div class="overview-wrapper">
     <div class="task-overview">
       <div class="task-toprow">
-        <div class="tasks-in-board">
+        <div routerLink="/board" class="tasks-in-board">
           <h1>{{ dataFromUser?.allTasks.length }}</h1>
           <p>Tasks in<br>Board</p>
         </div>
-        <div class="tasks-in-progress">
+        <div routerLink="/board" class="tasks-in-progress">
           <h1>{{ taskService.tasksInProgress.length }}</h1>
           <p>Tasks in<br>Progress</p>
         </div>
-        <div class="tasks-awaiting-feedback">
+        <div routerLink="/board" class="tasks-awaiting-feedback">
           <h1>{{ taskService.tasksAwaitingFeedback.length }}</h1>
           <p>Awaiting Feedback</p>
         </div>
       </div>
-      <div class="upcoming-task">
+      <div routerLink="/board" class="upcoming-task">
         <div class="urgent-bg">
           <img src="assets/img/icon-urgent-white.svg" alt="urgent-white.svg">
         </div>
@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="task-bottomrow">
-        <div class="tasks-in-todo">
+        <div routerLink="/board" class="tasks-in-todo">
           <div class="todo-done-bg">
             <img src="assets/img/white_pencil.svg" alt="pencil-svg">
           </div>
@@ -45,7 +45,7 @@
             <p>To Do</p>
           </div>
         </div>
-        <div class="tasks-in-done">
+        <div routerLink="/board" class="tasks-in-done">
           <div class="todo-done-bg">
             <img src="assets/img/white-check.svg" alt="check.svg">
           </div>

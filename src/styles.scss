@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 * {
   box-sizing: border-box;
   font-size: 16px;
-  font-family: "Inter";
+  font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -12,19 +13,6 @@ body {
 
 body {
   margin: 0;
-}
-
-app-add-task {
-  min-height: calc(100vh - 80px);
-  background-color: rgb(246, 247, 248);
-}
-
-@media (min-width: 1000px) {
-  app-add-task {
-    display: flex;
-    justify-content: center;
-    background-color: rgb(246, 247, 248);
-  }
 }
 
 html,
@@ -33,7 +21,6 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .cdk-drop-dragging .cdk-drag {
@@ -54,4 +41,26 @@ body {
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #A8A8A8;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: grey;
 }

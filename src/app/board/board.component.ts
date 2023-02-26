@@ -1,7 +1,12 @@
-import { Component, HostListener,Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FirestoreService } from '../shared/services/firestore.service';
 import { AuthService } from '../shared/services/auth.service';
+import { Observable } from 'rxjs';
+import { doc, getFirestore, onSnapshot } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { environment } from 'src/environments/environment';
+import { getAuth } from 'firebase/auth';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -9,6 +14,7 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class BoardComponent implements OnInit {
 
+  allTasks$: Observable<any[]> | undefined
   allTasks: any[] = [];
 
   tasksTodo: any[] = [];
@@ -19,14 +25,37 @@ export class BoardComponent implements OnInit {
   showTaskDetail: boolean = false; //false by default
   isDesktopView: boolean = false;
   windowWidth: number = window.innerWidth;
-  detailTask: any ;
+  detailTask: any;
 
-  constructor(public firestoreService: FirestoreService, public authService: AuthService) { }
+  app = initializeApp(environment.firebase);
+  auth = getAuth(this.app);
+  db = getFirestore(this.app);
+
+  constructor(public firestoreService: FirestoreService, public authService: AuthService) {
+
+    setTimeout(() => {
+      const unsub = onSnapshot(doc(this.db, "Users", this.firestoreService.currentUserDocID), (doc) => {
+        if (doc.exists()) {
+          this.allTasks = this.firestoreService.currentUserData.allTasks;
+          this.filterTasks();
+        }
+      });
+    }, 1000)
+
+
+  }
+
+  getUserID(){
+    this.authService.checkAuthState();
+    this.firestoreService.getCurrentuser();
+
+    let id = this.firestoreService.currentUserDocID;
+    return id
+  }
 
   @HostListener('window:resize') onResize() {
 
     this.windowWidth = window.innerWidth;
-    console.log(this.isDesktopView)
     if (this.windowWidth > 1000) {
       this.isDesktopView = true;
     } else {
@@ -37,9 +66,9 @@ export class BoardComponent implements OnInit {
   async ngOnInit() {
     await this.authService.checkAuthState();
     await this.firestoreService.getCurrentuser();
+    debugger;
     this.allTasks = this.firestoreService.currentUserData.allTasks;
     this.filterTasks();
-    console.log(this.allTasks);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -69,22 +98,22 @@ export class BoardComponent implements OnInit {
 
     if (array[i].priority == 'low') {
       return 'assets/img/prio-low.svg'
-    } else if (array[i].priority == 'medium') {
-      return 'assets/img/prio-medium.svg'
-    } else {
+    } else if (array[i].priority == 'urgent') {
       return 'assets/img/prio-urgent.svg'
+    } else {
+      return 'assets/img/prio-medium.svg'
     }
   }
 
   changeTaskStatus(event: any) {
     let currentIndex = event.currentIndex;
-    if (event.container.id == 'cdk-drop-list-0') {
+    if (event.container.id == 'dropList0') {
       this.tasksTodo[currentIndex].status = 'todo';
-    } else if (event.container.id == 'cdk-drop-list-1') {
+    } else if (event.container.id == 'dropList1') {
       this.tasksInProgress[currentIndex].status = 'in-progress';
-    } else if (event.container.id == 'cdk-drop-list-2') {
+    } else if (event.container.id == 'dropList2') {
       this.tasksAwaitingFeedback[currentIndex].status = 'awaiting-feedback';
-    } else {
+    } else if (event.container.id == 'dropList3') {
       this.tasksDone[currentIndex].status = 'done';
     }
     this.firestoreService.updateUserTasks(this.allTasks);
@@ -99,12 +128,12 @@ export class BoardComponent implements OnInit {
 
   checkMatchWithSearch(task: any) {
     return task.title.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()) ||
-           task.category.name.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()) ||
-           task.description.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()) ||
-           task.priority.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase())
+      task.category.name.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()) ||
+      task.description.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()) ||
+      task.priority.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase())
   }
 
-  openDetailTask(i: number, array: Array<any>){
+  openDetailTask(i: number, array: Array<any>) {
     this.showTaskDetail = true;
     this.detailTask = array[i];
   }

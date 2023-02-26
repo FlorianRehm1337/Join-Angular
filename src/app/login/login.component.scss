@@ -96,6 +96,7 @@
     flex-direction: row;
     align-items: center;
     padding: 13px 21px;
+    padding-right: 40px;
     gap: 10px;
     height: 41px;
     background: #ffffff;
@@ -115,13 +116,13 @@
   }
 
   input:first-child {
-    background-image: url("~src/assets/img/email_input.svg");
+    background-image: url("./../../assets/img/email_input.svg");
     background-repeat: no-repeat;
     background-position: 95%, center;
   }
 
   input:nth-child(2) {
-    background-image: url("~src/assets/img/icon-lock-user.svg");
+    background-image: url("./../../assets/img/icon-lock-user.svg");
     background-repeat: no-repeat;
     background-position: 95%, center;
   }

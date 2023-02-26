@@ -57,6 +57,7 @@ export class ContactsComponent implements OnInit {
     await this.authService.checkAuthState()
     await this.firestoreService.getCurrentuser();
     this.contactsservice.loadContactsFromDB();
+    this.removeCurrentUserFromContacts();
   }
 
   openDetailView(contactEmail: string){
@@ -74,7 +75,6 @@ export class ContactsComponent implements OnInit {
 
   editContact(currentDetailContact: Object){
     this.contactsservice.openEditContact = true;
-    console.log(currentDetailContact);
   }
 
   deleteContact(){
@@ -87,4 +87,11 @@ export class ContactsComponent implements OnInit {
     this.selectedIndex = i;
   }
 
+  removeCurrentUserFromContacts(){
+    let index = this.contactsservice.allContacts.findIndex(contact => contact.name == this.firestoreService.currentUserData.displayName);
+    if (index != -1) {
+      this.contactsservice.allContacts.splice(index, 1)
+    }
+
+  }
 }

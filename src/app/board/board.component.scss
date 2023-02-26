@@ -38,6 +38,11 @@
     align-items: center;
     cursor: pointer;
 
+    &:hover:enabled {
+      background: #29abe2;
+      box-shadow: 0px 4px 10px -5px black;
+    }
+
     p {
       color: white;
       margin: 0;
@@ -124,6 +129,7 @@
     line-height: 120%;
     color: #2a3647;
     margin: 15px 0 10px 0;
+    word-break: break-all;
   }
 }
 
@@ -137,6 +143,7 @@
 }
 
 .task-description {
+  word-break: break-all;
   color: #a8a8a8;
   margin: 0 0 18px 0;
 }

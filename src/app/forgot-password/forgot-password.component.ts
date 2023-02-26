@@ -14,7 +14,11 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendEmail(){
-    this.authservice.resetPassword(this.email)
+    this.authservice.forgetPassword(this.email)
+  }
+
+  resetError(){
+    this.authservice.emailSentError = false;
   }
 
 }

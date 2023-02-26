@@ -11,7 +11,7 @@
 
       <button routerLink="/addtask">
         <p>Add Task</p>
-        <img src="/assets/img/icon-add-plus.svg" alt="addtask.svg">
+        <img src="assets/img/icon-add-plus.svg" alt="addtask.svg">
       </button>
     </div>
   </div>
@@ -25,7 +25,7 @@
     <div class="status-container">
       <h2>To Do</h2>
 
-      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="tasksTodo"
+      <div [cdkDropListAutoScrollStep]="10" id="dropList0" cdkDropList #todoList="cdkDropList" [cdkDropListData]="tasksTodo"
         [cdkDropListConnectedTo]="[doneList,inProgressList,awaitFeedbackList]" class="task-container"
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksTodo.length == 0">There are no tasks here!</p>
@@ -61,7 +61,7 @@
     <div class="status-container">
       <h2>In Progress</h2>
 
-      <div cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="tasksInProgress"
+      <div [cdkDropListAutoScrollStep]="10" id="dropList1" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="tasksInProgress"
         [cdkDropListConnectedTo]="[todoList,awaitFeedbackList,doneList]" class="task-container"
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksInProgress.length == 0">There are no tasks here!</p>
@@ -96,7 +96,7 @@
     <div class="status-container">
       <h2>Awaiting Feedback</h2>
 
-      <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="tasksAwaitingFeedback"
+      <div [cdkDropListAutoScrollStep]="10" id="dropList2" cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="tasksAwaitingFeedback"
         [cdkDropListConnectedTo]="[doneList,inProgressList,todoList]" class="task-container"
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksAwaitingFeedback.length == 0">There are no tasks here!</p>
@@ -131,7 +131,7 @@
     <div class="status-container">
       <h2>Done</h2>
 
-      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="tasksDone"
+      <div [cdkDropListAutoScrollStep]="10" id="dropList3" cdkDropList #doneList="cdkDropList" [cdkDropListData]="tasksDone"
         [cdkDropListConnectedTo]="[todoList,inProgressList,awaitFeedbackList]" class="task-container"
         (cdkDropListDropped)="drop($event)">
         <p *ngIf="tasksDone.length == 0">There are no tasks here!</p>

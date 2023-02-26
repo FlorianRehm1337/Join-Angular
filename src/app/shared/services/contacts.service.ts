@@ -19,12 +19,8 @@ export class ContactsService {
 
   constructor(public firestoreService: FirestoreService) { }
 
-
-
   loadContactsFromDB() {
-    console.log(this.firestoreService.currentUserData);
     this.allContacts = this.firestoreService.currentUserData.contacts;
-    console.log(this.allContacts);
   }
 
   openAddContact() {

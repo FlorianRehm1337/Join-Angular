@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
   }
 
   async logInUser() {
-    debugger
     if (this.isChecked) {
       this.authservice.rememberLogin = true;
     } else {

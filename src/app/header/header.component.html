@@ -5,8 +5,8 @@
       <img src="assets/img/profil-img.png" alt="proil-img.png">
     </div>
     <div class="resp-menu" [ngClass]="menuOpened ? 'show' : 'hide'">
-      <a routerLink="/help">Help</a>
-      <a routerLink="/legal-notice">Legal notice</a>
+      <a (click)="openMenu()" routerLink="/help">Help</a>
+      <a (click)="openMenu()" routerLink="/legal-notice">Legal notice</a>
       <a (click)="logOut()">Log out</a>
     </div>
   </div>

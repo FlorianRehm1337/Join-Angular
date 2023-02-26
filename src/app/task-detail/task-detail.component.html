@@ -19,11 +19,11 @@
     <div class="task-prio">
       <b>Priority:</b>
       <div [style.background-color]="getPrioBackground(clickedTask.priority)">
-        <p>{{ clickedTask.priority }}</p>
+        <p>{{ getPrioName(clickedTask.priority) }}</p>
         <img [src]="getPrioImage(clickedTask.priority)" alt="prio-img.svg">
       </div>
     </div>
-    <div class="task-assignee-container">
+    <div *ngIf="clickedTask.assignee.length != 0" class="task-assignee-container">
       <b>Assigned To:</b>
       <div class="assignee-wrapper">
         <ng-container *ngFor="let assignee of clickedTask.assignee">
@@ -44,13 +44,15 @@
           <p>{{ subtask.subtask }}</p>
         </div>
       </ng-container>
-      <div class="edit-trash-container">
-        <img (click)="deleteTask()" class="delete-mobile" src="assets/img/trash.png" alt="trash.png">
-        <img (click)="openEditTask()" class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.png">
-      </div>
+
+    </div>
+    <div class="edit-trash-container">
+      <img (click)="deleteTask()" class="delete-mobile" src="assets/img/trash.png" alt="trash.png">
+      <img (click)="openEditTask()" class="edit-mobile" src="assets/img/white-pencil.png" alt="pencil.png">
     </div>
   </div>
 
 </div>
 
-<app-task-detail-edit (editTaskOpened)="editTaskOpened = false" [taskToEdit]="clickedTask" *ngIf="editTaskOpened"></app-task-detail-edit>
+<app-task-detail-edit (editTaskOpened)="editTaskOpened = false" [taskToEdit]="clickedTask"
+  *ngIf="editTaskOpened"></app-task-detail-edit>

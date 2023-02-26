@@ -13,7 +13,6 @@ export class InputService {
   password: string = '';
   phoneNumber: string = '';
   date: any;
-
   title: string = '';
   description: string = '';
 
@@ -35,7 +34,7 @@ export class InputService {
   }
 
   onChangePhoneNumber(event: any) {
-    this.phoneNumber = event.value;
+      this.phoneNumber = event.value;
   }
 
   onChangeTitle(event: any) {
@@ -49,6 +48,4 @@ export class InputService {
   onChangeDate(event: any){
     this.date = event.value;
   }
-
-
 }

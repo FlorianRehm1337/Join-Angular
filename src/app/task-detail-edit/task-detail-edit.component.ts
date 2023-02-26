@@ -111,11 +111,9 @@ export class TaskDetailEditComponent implements OnInit {
   handleChecked(i: number, event: Event) {
     event.stopPropagation();
     this.taskToEdit.assignee[i].checked = !this.taskToEdit.assignee[i].checked;
-    console.log(this.taskToEdit.assignee)
   }
 
   saveTaskChanges() {
-    debugger;
     let checkedAssignees = this.taskToEdit.assignee.filter((contact: { checked: any; }) => contact.checked)
     this.taskToEdit.assignee = checkedAssignees;
     this.allTasks[this.taskIndex] = this.taskToEdit;

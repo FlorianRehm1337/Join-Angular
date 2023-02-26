@@ -74,12 +74,13 @@
                   <div class="category-color" [style.background-color]="category.color"></div>
                 </div>
 
-                <img (click)="deleteCategory(i)" class="category-trash" src="/assets/img/trash.png" alt="trash.png">
+                <img (click)="deleteCategory(i)" class="category-trash" src="assets/img/trash.png" alt="trash.png">
               </div>
             </ng-container>
           </div>
         </div>
               <p class="error" *ngIf="this.choosenCategory == undefined && formSubmitted">Please select a category.</p>
+              <p class="error" *ngIf="this.newCategoryValue == '' && categorySubmitted">Please select a color.</p>
       </div>
 
       <div class="input-container">
@@ -114,7 +115,7 @@
               <input [checked]="subtask.checked" type="checkbox" id="subtask{{i}}">
               <span [ngClass]="{'checked-contacts': subtask.checked}">{{ subtask.subtask }}</span>
             </div>
-            <img (click)="deleteSubtask(i)" class="category-trash" src="/assets/img/trash.png" alt="trash.png">
+            <img (click)="deleteSubtask(i)" class="category-trash" src="assets/img/trash.png" alt="trash.png">
           </div>
         </ng-container>
 
