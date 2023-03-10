@@ -2,7 +2,7 @@
   <img src="assets/img/join-logo.svg" alt="logo.svg">
   <div *ngIf="router.url != '/addtask'" class="help-profile-container">
     <div (click)="openMenu()" class="profile-border">
-      <img src="assets/img/profil-img.png" alt="proil-img.png">
+      <img src="assets/img/profile-img.png" alt="proil-img.png">
     </div>
     <div class="resp-menu" [ngClass]="menuOpened ? 'show' : 'hide'">
       <a (click)="openMenu()" routerLink="/help">Help</a>
@@ -19,7 +19,7 @@
   <div class="help-profile-container">
     <img routerLink="/help" class="d-none" src="assets/img/icon-help-head.svg" alt="help.svg">
     <div (click)="openMenu()" class="profile-border">
-      <img src="assets/img/profil-img.png" alt="profile.png">
+      <img src="assets/img/profile-img.png" alt="profile.png">
     </div>
     <div class="resp-menu desktop-menu" [ngClass]="menuOpened ? 'show' : 'hide'">
       <a (click)="logOut()">Log out</a>
