@@ -66,7 +66,6 @@ export class BoardComponent implements OnInit {
   async ngOnInit() {
     await this.authService.checkAuthState();
     await this.firestoreService.getCurrentuser();
-    debugger;
     this.allTasks = this.firestoreService.currentUserData.allTasks;
     this.filterTasks();
   }

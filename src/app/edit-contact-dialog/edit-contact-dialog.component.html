@@ -41,7 +41,7 @@
         </ng-container>
 
         <!-- Phone Number Input -->
-        <input (change)="inputservice.onChangePhoneNumber($event.target)" formControlName="phoneNumber" placeholder="Phone" type="number">
+        <input (change)="inputservice.onChangePhoneNumber($event.target)" formControlName="phoneNumber" placeholder="Phone" type="text">
         <ng-container *ngIf="editContactForm.controls['phoneNumber'] as phoneNumber">
           <ng-container class="input-container" *ngIf="phoneNumber.dirty || phoneNumber.touched">
             <ng-container *ngIf="phoneNumber.errors as errors">

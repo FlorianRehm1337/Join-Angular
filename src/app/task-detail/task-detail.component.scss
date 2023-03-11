@@ -10,7 +10,7 @@
 
 .task-detail-container {
   position: relative;
-  padding: 60px 32px 60px 32px;
+  padding: 60px 32px 32px 32px;
   z-index: 1;
   word-break: break-all;
 
@@ -86,6 +86,8 @@
 }
 
 .assignee-wrapper {
+  max-height: 120px;
+  overflow-y: scroll;
   margin-top: 32px;
   gap: 16px;
   display: flex;
@@ -152,7 +154,7 @@
 
 .subtask {
   display: flex;
-  margin-top: 24px;
+  margin-top: 12px;
   gap: 16px;
 
   input {
